@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Notes for EOLine Solving</title>
+  <style type="text/css">
+	a { text-decoration: none; color: white; }
+	body { font-family: Verdana, sans-serif; background: green; color: black; }
+	div.content { max-width: 40em; padding: 1em; margin: 0 auto; }
+	div.footer { font-size: 75%; text-align: right; }
+	h1 { color: yellow; }
+	h2 { color: yellow; }
+	p { text-indent: 0.5em; }
+	span { font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="content">
+
+<h1>Notes for EOLine Solving</h1>
+
+by <a href="index.html">Richard Taylor</a>
+
+    
+<h2>Introduction</h2>
+
+<p>The ZZ method for solving a Rubik's Cube has a first step called
+<i>EOLine</i>, where edges are oriented and a line is made across the
+bottom face. After this step the cube can be solved with only R, U and L
+turns. This can be very fast, especially for one-handed solving.</p>
+
+<p>Check out Conrad Rider's excellent
+<a href="http://cube.crider.co.uk/zz.php">tutorial</a> to get you started.</a>
+
+<p>Which is great. Except that EOLine is hard. Which means that most people
+start by solving edge orientation (EO) first and then solving the line as
+a second step.</p>
+
+<p>As you get more experienced you want to start solving EO and the Line in
+one step. But that can be a big leap to make; because you have to stop thinking
+of just <i>good</i> and <i>bad</i> edges and realise that the 2 line edge
+pieces are special.</p>
+
+<p>This page is a collection of examples that helped me improve my EOLine. If
+I get time I will also make some YouTube videos to match.</p>
+
+<p>I scramble with yellow on the top and green on the front.</p>
+
+<h2>Simple 4 bad edge case</h2>
+
+<p>This example shows that the most obvious edge orientation moves can
+sometimes place the line nicely. There are 4 bad edges; one line edge is
+good, the other is bad.</p> 
+
+<p>scramble: 
+<span>U B2 D2 B U2 F U2 L' B2 L2 F D2 F' U2 R2 F' R2 D2 F' U'</span></p>
+
+<p>eoline: <span>U  R' L' F D2</span></p>
+
+<p>The <span>U R'</span> puts the red-green and blue-white bad edges onto the
+front face without disturbing the good green-white edge. The <span>L'</span>
+places the red-yellow bad edge on the front face; and the <span>F</span> then
+makes all 4 bad edges good. Finally the <span>D2</span> puts the line the
+right way round.</p>
+
+<p>Things to note here:</p>
+
+<ol>
+<li>Putting a bad line edge into the FL or FR position allows it to be
+oriented and placed into the line with one turn.</li>
+<li>If it is easier to place the line edges on the opposite face to where
+they end up, then go for it, because you only need one <span>D2</span> to
+swap them at the end.</li>
+<li>This is not the only way... <span>D2 U' L' R' B</span> is the same number
+of turns but maybe a bit slower to execute.</li>
+</ol>
+
+<h2>Simple 6 bad edge case</h2>
+
+<p>6 bad edges is the most likely case. In this example both line edges are
+good but placed on the same face.</p>
+
+<p>scramble:
+<span>B2 U R2 U2 L' B' D2 R' F L U F2 L2 U L2 U L2 U L2 U2 R2</span></p>
+
+<p>eoline: <span>F L F2 D' L2 F D'</span></p>
+
+<p>Since there are 3 bad edges conveniently on the front face, we can start
+with an <span>F</span> to leave us with 4 bad edges. Then <span>L F2 D'</span>
+simultaneously places all the bad edges on the front face <i>and</i> places
+the 2 line edges opposite each other. Leaving just <span>F</span> or
+<span>F'</span> to fix the edges and <span>D'</span> to swing the line into
+place.</p>
+
+<p>Things to note here:</p>
+
+<ol>
+<li>If line edges are already good then you probably have to place them into
+the DL and DR slots, because they will get in the way on the front and back
+faces.</li>
+<li>You can use <span>F2</span> to move edges between the left and right side
+of the cube and the top and bottom, without changing any edge orientation.</li>
+</ol>
+
+<h2>Hard 6 bad edge case</h2>
+
+<p>Normally with 6 bad edges you would either fix 4 + 2, or 3 + 3. But
+sometimes it might be better to add 2 bad edges and then fix 4 + 4. It sounds
+mad; but when you are trying to place the line at the same time it can work
+out nicely.</p>
+
+<p>scramble:
+<span>F' U2 B D2 B L2 F' D2 F' R2 D2 U R F' L F2 D' B' D' R' U</span></p>
+
+<p>eoline: <span>F B2 R F B U' F2</span></p>
+
+<p>This is hard to spot quickly. Especially since <span>B'</span> looks
+like a good start.</p>
+
+<div class="footer">updated July 2017</div>
+</div>
+</body>
+</html>
