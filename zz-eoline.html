@@ -5,11 +5,12 @@
   <title>Notes for EOLine Solving</title>
   <style type="text/css">
 	a { text-decoration: none; color: white; }
-	body { font-family: Verdana, sans-serif; background: green; color: black; }
+	body { font-family: Verdana, sans-serif; background: #0d0; color: black; }
 	div.content { max-width: 40em; padding: 1em; margin: 0 auto; }
 	div.footer { font-size: 75%; text-align: right; }
-	h1 { color: yellow; }
-	h2 { color: yellow; }
+	h1 { color: #ff0; }
+	h2 { color: #ff4; }
+	h3 { color: #ff8; }
 	p { text-indent: 0.5em; }
 	span { font-weight: bold; }
   </style>
@@ -21,13 +22,13 @@
 
 by <a href="index.html">Richard Taylor</a>
 
-    
 <h2>Introduction</h2>
 
 <p>The ZZ method for solving a Rubik's Cube has a first step called
 <i>EOLine</i>, where edges are oriented and a line is made across the
-bottom face. After this step the cube can be solved with only R, U and L
-turns. This can be very fast, especially for one-handed solving.</p>
+bottom face. After this step the cube can be solved with only <span>R</span>,
+<span>U</span> and <span>L</span> turns. This can be very fast, especially
+for one-handed solving.</p>
 
 <p>Check out Conrad Rider's excellent
 <a href="http://cube.crider.co.uk/zz.php">tutorial</a> to get you started.</a>
@@ -44,21 +45,34 @@ pieces are special.</p>
 <p>This page is a collection of examples that helped me improve my EOLine. If
 I get time I will also make some YouTube videos to match.</p>
 
-<p>I scramble with yellow on the top and green on the front.</p>
+<p>I scramble with yellow on the top and green on the front; but I will try
+and refer to slots (e.g. UF for up-front) rather than colours.</p>
 
-<h2>Simple 4 bad edge case</h2>
+
+
+<h2>2 bad edges</h2>
+
+<p>Quite rare (3%) and fairly easy.</p>
+
+
+
+<h2>4 bad edges</h2>
+
+<p>Common (24%) and not too hard.</p>
+
+<h3>4.1 Simple case</h2>
 
 <p>This example shows that the most obvious edge orientation moves can
-sometimes place the line nicely. There are 4 bad edges; one line edge is
-good, the other is bad.</p> 
+sometimes place the line nicely. Initially one line edge is good and the
+other is bad.</p> 
 
 <p>scramble: 
 <span>U B2 D2 B U2 F U2 L' B2 L2 F D2 F' U2 R2 F' R2 D2 F' U'</span></p>
 
 <p>eoline: <span>U  R' L' F D2</span></p>
 
-<p>The <span>U R'</span> puts the red-green and blue-white bad edges onto the
-front face without disturbing the good green-white edge. The <span>L'</span>
+<p>The <span>U R'</span> puts the bad edges in UB and UR onto the
+front face without disturbing the good line edge in DB. The <span>L'</span>
 places the red-yellow bad edge on the front face; and the <span>F</span> then
 makes all 4 bad edges good. Finally the <span>D2</span> puts the line the
 right way round.</p>
@@ -75,10 +89,15 @@ swap them at the end.</li>
 of turns but maybe a bit slower to execute.</li>
 </ol>
 
-<h2>Simple 6 bad edge case</h2>
 
-<p>6 bad edges is the most likely case. In this example both line edges are
-good but placed on the same face.</p>
+
+<h2>6 bad edges</h2>
+
+<p>Most likely (45%); can be tricky; lots of options.</p>
+
+<h3>6.1 Simple case</h3>
+
+<p>In this example both line edges are good but placed on the same face.</p>
 
 <p>scramble:
 <span>B2 U R2 U2 L' B' D2 R' F L U F2 L2 U L2 U L2 U L2 U2 R2</span></p>
@@ -102,7 +121,7 @@ faces.</li>
 of the cube and the top and bottom, without changing any edge orientation.</li>
 </ol>
 
-<h2>Hard 6 bad edge case</h2>
+<h3>6.2 Hard case</h3>
 
 <p>Normally with 6 bad edges you would either fix 4 + 2, or 3 + 3. But
 sometimes it might be better to add 2 bad edges and then fix 4 + 4. It sounds
@@ -116,6 +135,57 @@ out nicely.</p>
 
 <p>This is hard to spot quickly. Especially since <span>B'</span> looks
 like a good start.</p>
+
+<p>The initial <span>F B2</span> takes us from 6 bad edges to 8. But crucially
+those 8 edges are much better balanced between the left and right side of the
+cube. And so from there we only need a single <span>R</span> turn to place
+all 8 edges onto the front and back faces. Which leaves just <span>F B</span>
+to fix all the edges (and place one of the line pieces) followed by
+<span>U' F2</span> to place the final line piece.
+
+<p>Things to note here:</p>
+
+<ol>
+<li>Where the bad edges are is as important as how many there are. In some
+cases like this, it is worth increasing the number of bad edges to get a
+better distribution of bad edges.</li>
+</ol>
+
+
+
+<h2>8 bad edges</h2>
+
+<p>Common (24%) can be hard if the line pieces are awkward.</p>
+
+<h3>8.1 Simple case</h3>
+
+<p>Here the bad edges are nicely spread, with 4 already on the front face
+and 2 on the back. One line piece is good and the other is bad.</p>
+
+<p>scramble:
+<span>R B2 L2 B2 U R2 D2 F2 U' B2 R2 U' R' U2 R2 B' U2 R U F R</span></p>
+
+<p>eoline: <span>F' R U F2 B'</span></p>
+
+<p>The initial <span>F'</span> is better than <span>F</span> because it
+allows us to then move the line piece onto the top of the cube while we
+put the other 2 bad edges onto the back with <span>R U</span>. We then
+simply place that line piece with <span>F2</span> and fix the last 4
+edges with <span>B'</span> which also places the back line piece.</p>
+
+<p>Things to note here:</p>
+
+<ol>
+<li>Having 8 bad edges is not necessarily harder than 4.</li>
+</ol>
+
+
+
+<h2>10 bad edges</h2>
+
+<p>Quite rare (3%) can be hard if the line pieces are awkward.</p>
+
+
 
 <div class="footer">updated July 2017</div>
 </div>
