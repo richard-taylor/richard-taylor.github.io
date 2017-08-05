@@ -69,7 +69,8 @@ other is bad.</p>
 <p>scramble: 
 <span>U B2 D2 B U2 F U2 L' B2 L2 F D2 F' U2 R2 F' R2 D2 F' U'</span></p>
 
-<p>eoline: <span>U  R' L' F D2</span></p>
+<p>eoline: <span>U  R' L' F D2</span>
+(<a href="https://www.youtube.com/watch?v=NXQwmc4Qi0E">video</a>)</p>
 
 <p>The <span>U R'</span> puts the bad edges in UB and UR onto the
 front face without disturbing the good line edge in DB. The <span>L'</span>
@@ -97,28 +98,26 @@ of turns but maybe a bit slower to execute.</li>
 
 <h3>6.1 Simple case</h3>
 
-<p>In this example both line edges are good but placed on the same face.</p>
+<p>In this example both line edges are good and placed on the bottom face.</p>
 
 <p>scramble:
-<span>B2 U R2 U2 L' B' D2 R' F L U F2 L2 U L2 U L2 U L2 U2 R2</span></p>
+<span>U2 R' U2 R' D2 U2 L' F2 D2 F2 L2 D' B D2 B2 D F' R' F' D</span></p>
 
-<p>eoline: <span>F L F2 D' L2 F D'</span></p>
+<p>eoline: <span>R' F R U2 B D'</span></p>
 
-<p>Since there are 3 bad edges conveniently on the front face, we can start
-with an <span>F</span> to leave us with 4 bad edges. Then <span>L F2 D'</span>
-simultaneously places all the bad edges on the front face <i>and</i> places
-the 2 line edges opposite each other. Leaving just <span>F</span> or
-<span>F'</span> to fix the edges and <span>D'</span> to swing the line into
-place.</p>
+<p>Since the line pieces are already on the bottom we want to keep them there
+if possible. There are 3 bad edges conveniently on the back face, and 2 on
+the front face. We can start with <span>R' F R</span> to reduce the front
+face to one bad edge without damaging the line. Then <span>U2 B</span>
+places all the bad edges on the back face and fixes them; leaving just
+<span>D'</span> to swing the line into place.</p>
 
 <p>Things to note here:</p>
 
 <ol>
-<li>If line edges are already good then you probably have to place them into
-the DL and DR slots, because they will get in the way on the front and back
-faces.</li>
-<li>You can use <span>F2</span> to move edges between the left and right side
-of the cube and the top and bottom, without changing any edge orientation.</li>
+<li>If line edges are already good then you probably have to place them (or
+leave them) in the DL and DR slots, because they will get in the way on the
+front and back faces.</li>
 </ol>
 
 <h3>6.2 Hard case</h3>
@@ -149,6 +148,9 @@ to fix all the edges (and place one of the line pieces) followed by
 <li>Where the bad edges are is as important as how many there are. In some
 cases like this, it is worth increasing the number of bad edges to get a
 better distribution of bad edges.</li>
+<li>You can use <span>B2</span> (or <span>F2</span>) to move edges between
+the left and right side of the cube and the top and bottom, without changing
+any edge orientation.</li>
 </ol>
 
 
@@ -165,7 +167,8 @@ and 2 on the back. One line piece is good and the other is bad.</p>
 <p>scramble:
 <span>R B2 L2 B2 U R2 D2 F2 U' B2 R2 U' R' U2 R2 B' U2 R U F R</span></p>
 
-<p>eoline: <span>F' R U F2 B'</span></p>
+<p>eoline: <span>F' R U F2 B'</span>
+(<a href="https://www.youtube.com/watch?v=vmsUjUor8fs">video</a>)</p>
 
 <p>The initial <span>F'</span> is better than <span>F</span> because it
 allows us to then move the line piece onto the top of the cube while we
