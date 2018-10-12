@@ -6,20 +6,21 @@
   <base target="_top"/>
   <style type="text/css">
 	a { text-decoration: none; color: #0000aa; }
-	body { font-family: Verdana, sans-serif; background: #dddddd; color: #000000; border: 0; margin: 0; padding: 0; }
-	div.content { background: #ddffdd; max-width: 40em; padding: 2em; margin: 0 auto; }
-	div.footer { font-size: 75%; text-align: right; }
+	body { background: #ddffdd; font-family: Verdana, sans-serif; }
+	div.content { color: #000000; margin:0; padding: 0 2em; }
+	div.footer { color: #808080; font-size: 75%; text-align: right; }
 	h1 { color: #222222; }
 	h2 { border-top: 1px solid #333333; color: #333333; }
 	p { text-indent: 1em; }
   </style>
 </head>
 <body>
-  <div class="content">
+  <div id="title" class="content">
     <h1>Richard Taylor <a id="anchor1">@</a></h1>
     
     Barton. Southampton. Bath. Guildford.
-    
+  </div>
+  <div id="work" class="content">
     <h2>Science and Engineering</h2>
     
     <p>In 1992 I published my
@@ -32,10 +33,11 @@
 
     <p>See my <a href="https://github.com/richard-taylor">github projects</a>
     if you want to know how much spare time I have had recently.</p>
-
+  </div>
+  <div id="cubing" class="content">
     <h2>Rubik's Cube</h2>
     
-    <p>As the father of a proper speedcuber, I have been to many competitions
+    <p>As the father of two speedcubers, I have been to many competitions
     as a spectator and supporter. In 2015 I got bounced into competing but,
     as you can see from my
     <a href="https://www.worldcubeassociation.org/results/p.php?i=2015TAYL04">official cubing record</a>,
@@ -43,7 +45,8 @@
     and managed a 29.60 second solve at the Stratford-upon-Avon Open 2018.</p>
 
     <p>An official sub-30 average is my goal.</p>
-
+  </div>
+  <div id="writing" class="content">
     <h2>Eddie Shore</h2>
     
     <p>The 1930s ice-hockey player was originally the inspiration for my Quake
@@ -56,7 +59,8 @@
     price.</p>
 
     <p>A third novel may or may not be in progress...</p>
-
+  </div>
+  <div id="clues" class="content">
     <h2>Disambiguation</h2>
 
     <p>There are many people called Richard Taylor. Some of them are famous.
@@ -78,7 +82,8 @@
     <p>And I am a member of
     <a href="http://charlottevillecc.org.uk">Charlotteville CC</a>.
     </p>
-
+  </div>
+  <div id="contact" class="content">
     <h2>Contact Details</h2>
     
     <p>If you got this far looking for my email address then you either missed
@@ -87,9 +92,8 @@
     
     <p>If it's the latter then you can probably work out my address from the
     page source :-)</p>
-   
-    <div class="footer">updated September 2018</div>
   </div>
+  <div class="footer">updated October 2018</div>
   <script type="text/javascript">
     var noa = ['m', 'ilto:rich', 'rd@rich', 'rdt', 'ylor.co.uk'];
     var ema = noa.join('a');
