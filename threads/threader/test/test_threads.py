@@ -27,8 +27,8 @@ class TestThreads(unittest.TestCase):
         t = threader.threads.Thread('examples/t1')
         t.update()
         self.assertEqual(2, len(t.articles))
-        self.assertEqual('2019-01-01', t.articles[0].date)
-        self.assertEqual('2018-12-31', t.articles[1].date)
+        self.assertEqual('2018-12-31', t.articles[0].date)
+        self.assertEqual('2019-01-01', t.articles[1].date)
 
     def test_valid_article(self):
         a = threader.threads.Article('examples/t1/small.html')

@@ -15,16 +15,6 @@ thread_list = threads.find(directory)
 for thread in thread_list:
     thread.update()
 
-table = ''
-for thread in thread_list:
-    table = table + '<p>' + thread.config['name'] + '</p>\n'
-        
-f_template = os.path.join(directory, 'index.o.html')
-f_index = f_template.replace('.o.', '.')
+threads.index(thread_list)
 
-with open(f_index, 'w') as index:
-
-    with open(f_template, 'r') as template:
-        index.write(template.read().replace('__THREADS_INDEX__', table))
-        
-logging.info('Index %s', f_index)
+logging.info('Done.')

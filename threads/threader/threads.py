@@ -15,7 +15,10 @@ class Article():
         self.title = None
         self.date = None
 
-        if filename.endswith('.html') and not filename.endswith('index.html'):
+        if filename.endswith('.html') \
+          and os.path.basename(filename) != 'index.html':
+
+            logging.info('Found ' + filename)
             self.extract_title_and_date()
         else:
             raise ArticleNotFound()
@@ -37,6 +40,9 @@ class Article():
                 if '</head>' in line:
                     return
 
+    def update(self, previous_article, next_article):
+        return True
+
 class ThreadNotFound(Exception):
     pass
 
@@ -56,6 +62,15 @@ class Thread():
             raise ThreadNotFound()
 
     def update(self):
+        self.find_articles()
+        self.articles.sort(key = lambda x: x.date)
+
+        for index, article in enumerate(self.articles):
+            article.update(self.article(index - 1), self.article(index + 1))
+
+        self.make_index()
+
+    def find_articles(self):
         self.articles = []
         for entry in os.scandir(self.directory):
             try:
@@ -64,7 +79,14 @@ class Thread():
             except ArticleNotFound:
                 pass
 
-        self.articles.sort(key = lambda x: x.date, reverse = True)
+    def article(self, index):
+        if index >= 0 and index < len(self.articles):
+            return self.articles[index]
+        else:
+            return None
+
+    def make_index(self):
+        return False
 
 def find(directory):
     '''
@@ -85,3 +107,9 @@ def find(directory):
             pass
 
     return threads
+
+def index(thread_list):
+    '''
+    Create an index.html file showing all the threads in the list.
+    '''
+    pass
