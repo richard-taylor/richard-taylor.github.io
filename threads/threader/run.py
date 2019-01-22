@@ -12,6 +12,9 @@ logging.info('Threading in %s', directory)
 import threads
 thread_list = threads.find(directory)
 
+for thread in thread_list:
+    thread.update()
+
 table = ''
 for thread in thread_list:
     table = table + '<p>' + thread.config['name'] + '</p>\n'
