@@ -122,7 +122,38 @@ class Thread():
             return None
 
     def make_index(self):
-        return False
+        filename = os.path.join(self.directory, 'index.html')
+
+        header = '''<!DOCTYPE html>
+<html>
+<head>
+<title>index of {0}</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- GENERATED FILE -->
+
+<h1 class="title">index of {0}</h1>
+<a href="../contact.html">Richard Taylor</a>
+
+'''
+
+        with open(filename, 'w') as index:
+            index.write(header.format(self.config['name']))
+
+            if 'description' in self.config:
+                index.write('<p>' + self.config['description'])
+
+            index.write('<table class="index">\n')
+
+            for article in reversed(self.articles):
+                index.write('<tr>')
+                index.write('<td>{}</td>'.format(article.title))
+                index.write('<td>{}</td>'.format(article.date))
+                index.write('</tr>\n')
+
+            index.write('</table>\n</body>\n</html>')
 
 def find(directory):
     '''

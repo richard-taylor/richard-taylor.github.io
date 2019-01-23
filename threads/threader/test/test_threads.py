@@ -26,11 +26,28 @@ class TestThreads(unittest.TestCase):
         self.assertEqual(0, len(ts))
 
     def test_update(self):
-        t = threader.threads.Thread('examples/t1')
-        t.update()
-        self.assertEqual(2, len(t.articles))
-        self.assertEqual('2018-12-31', t.articles[0].date)
-        self.assertEqual('2019-01-01', t.articles[1].date)
+        index = 'examples/t1/index.html'
+        try:
+            t = threader.threads.Thread('examples/t1')
+            t.update()
+            self.assertEqual(2, len(t.articles))
+            self.assertEqual('2018-12-31', t.articles[0].date)
+            self.assertEqual('2019-01-01', t.articles[1].date)
+
+            self.assertTrue(threader.test.help.find_in_file(
+                index, 'index of T1 name')
+            )
+            self.assertTrue(threader.test.help.find_in_file(
+                index, 'This thread is about something.')
+            )
+            self.assertTrue(threader.test.help.find_in_file(
+                index, 'The Title')
+            )
+            self.assertTrue(threader.test.help.find_in_file(
+                index, 'New Year')
+            )
+        finally:
+            threader.test.help.quietly_remove(index)
 
     def test_valid_article(self):
         a = threader.threads.Article('examples/t1/small.html')

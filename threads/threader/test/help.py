@@ -1,6 +1,7 @@
 
 # helper functions for unit tests
 
+import os
 import shutil
 
 def copy_original(rootname):
@@ -12,3 +13,9 @@ def find_in_file(filename, text):
             if text in line:
                 return True
     return False
+
+def quietly_remove(filename):
+    try:
+        os.remove(filename)
+    except:
+        pass

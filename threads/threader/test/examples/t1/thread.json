@@ -1,1 +1,4 @@
-{ "name": "T1 name" }
+{
+    "name": "T1 name",
+    "description": "This thread is about something."
+}
