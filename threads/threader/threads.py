@@ -41,7 +41,43 @@ class Article():
                     return
 
     def update(self, previous_article, next_article):
-        return True
+
+        previous = self.link(previous_article, 'This is the first article.')
+        next = self.link(next_article, 'This is currently the latest article.')
+
+        swaps = [
+            Swap('<h1 class="title">{}</h1>', self.title),
+            Swap('<span class="date_created">{}</span>', self.date),
+            Swap('<span class="previous_article">{}</span>', previous),
+            Swap('<span class="next_article">{}</span>', next)
+        ]
+
+        lines = []
+        swapped = False
+        with open(self.filename) as file:
+            for line in file:
+                for swap in swaps:
+                    match = swap.pattern.search(line)
+                    if match and match.group() != swap.substitution:
+                        line = line.replace(match.group(), swap.substitution)
+                        swapped = True
+                lines.append(line)
+
+        if swapped:
+            with open(self.filename, 'w') as file:
+                for line in lines:
+                    file.write(line)
+
+    def link(self, article, default_text):
+        if article is None:
+            return default_text
+        return '<a href="{0}">{1}</a>'.format(
+            os.path.basename(article.filename), article.title)
+
+class Swap():
+    def __init__(self, pattern, substitution):
+        self.pattern = re.compile(pattern.replace('{}', '.*?'))
+        self.substitution = pattern.replace('{}', substitution)
 
 class ThreadNotFound(Exception):
     pass

@@ -1,5 +1,7 @@
 
+import threader.test.help
 import threader.threads
+import os
 import unittest
 
 class TestThreads(unittest.TestCase):
@@ -61,6 +63,60 @@ class TestThreads(unittest.TestCase):
             self.fail()
         except threader.threads.ArticleMetadataNotFound:
             pass
+
+    def test_update_title_and_date(self):
+        root = 'examples/not-a-thread/update'
+        html = root + '.html'
+        threader.test.help.copy_original(root)
+        try:
+            article = threader.threads.Article(html)
+            article.update(None, None)
+
+            self.assertTrue(threader.test.help.find_in_file(
+                html, '<h1 class="title">DRY Title</h1>')
+            )
+            self.assertTrue(threader.test.help.find_in_file(
+                html, '<span class="date_created">2018-11-11</span>')
+            )
+        finally:
+            os.remove(html)
+
+    def test_update_no_previous_or_next(self):
+        root = 'examples/not-a-thread/middle'
+        html = root + '.html'
+        threader.test.help.copy_original(root)
+        try:
+            article = threader.threads.Article(html)
+            article.update(None, None)
+
+            self.assertTrue(threader.test.help.find_in_file(
+                html, '<span class="previous_article">This is the first article.</span>')
+            )
+            self.assertTrue(threader.test.help.find_in_file(
+                html, '<span class="next_article">This is currently the latest article.</span>')
+            )
+        finally:
+            os.remove(html)
+
+    def test_update_with_previous_and_next(self):
+        root = 'examples/not-a-thread/middle'
+        html = root + '.html'
+        threader.test.help.copy_original(root)
+        try:
+            article = threader.threads.Article(html)
+            prev = threader.threads.Article('examples/not-a-thread/previous-article.html')
+            next = threader.threads.Article('examples/not-a-thread/next-article.html')
+
+            article.update(prev, next)
+
+            self.assertTrue(threader.test.help.find_in_file(
+                html, '<span class="previous_article"><a href="previous-article.html">The Previous Article Title</a></span>')
+            )
+            self.assertTrue(threader.test.help.find_in_file(
+                html, '<span class="next_article"><a href="next-article.html">The Next Article Title</a></span>')
+            )
+        finally:
+            os.remove(html)
 
 if __name__ == '__main__':
     unittest.main()

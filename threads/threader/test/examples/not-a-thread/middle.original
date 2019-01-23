@@ -1,0 +1,10 @@
+<html>
+ <head>
+  <title>The Middle Article Title</title>
+  <meta name="date.created" content="2018-07-01">
+ </head>
+ <body>
+   Previous article: <span class="previous_article"></span>
+   Next article: <span class="next_article"></span>
+ </body>
+</html>

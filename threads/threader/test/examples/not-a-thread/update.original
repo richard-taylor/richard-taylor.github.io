@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DRY Title</title>
+  <meta name="date.created" content="2018-11-11">
+</head>
+<body>
+
+  <h1 class="title"></h1>
+
+  I want the title from the "head" element to be used in the "h1" element
+  automatically. And I want the created date to be used in the "span" below.
+
+  <span class="date_created"></span>
+
+</body>
+</html>
