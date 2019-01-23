@@ -35,7 +35,7 @@ class TestThreads(unittest.TestCase):
             self.assertEqual('2019-01-01', t.articles[1].date)
 
             self.assertTrue(threader.test.help.find_in_file(
-                index, 'index of T1 name')
+                index, 'T1 name')
             )
             self.assertTrue(threader.test.help.find_in_file(
                 index, 'This thread is about something.')

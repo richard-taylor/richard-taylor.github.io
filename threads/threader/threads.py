@@ -127,14 +127,14 @@ class Thread():
         header = '''<!DOCTYPE html>
 <html>
 <head>
-<title>index of {0}</title>
+<title>{0}</title>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
 <!-- GENERATED FILE -->
 
-<h1 class="title">index of {0}</h1>
+<h1 class="title">{0}</h1>
 <a href="../contact.html">Richard Taylor</a>
 
 '''
@@ -147,9 +147,12 @@ class Thread():
 
             index.write('<table class="index">\n')
 
-            for article in reversed(self.articles):
+            for article in self.articles:
+                link = '<a href="{0}">{1}</a>'.format(
+                  os.path.basename(article.filename), article.title
+                )
                 index.write('<tr>')
-                index.write('<td>{}</td>'.format(article.title))
+                index.write('<td>{}</td>'.format(link))
                 index.write('<td>{}</td>'.format(article.date))
                 index.write('</tr>\n')
 

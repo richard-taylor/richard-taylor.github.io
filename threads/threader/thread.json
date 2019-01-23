@@ -1,3 +1,4 @@
 {
-  "name": "Article Threader"
+  "name": "Article Threader",
+  "description": "A python module to link sequences of articles into threads."
 }
