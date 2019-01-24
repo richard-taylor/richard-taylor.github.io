@@ -86,6 +86,7 @@ class Thread():
     def __init__(self, directory):
         self.directory = directory
         self.config = None
+        self.articles = []
 
         config_file = os.path.join(directory, 'thread.json')
         try:
@@ -120,6 +121,12 @@ class Thread():
             return self.articles[index]
         else:
             return None
+
+    def count(self):
+        return len(self.articles)
+
+    def latest(self):
+        return self.article(self.count() - 1)
 
     def make_index(self):
         filename = os.path.join(self.directory, 'index.html')
@@ -179,8 +186,61 @@ def find(directory):
 
     return threads
 
-def index(thread_list):
+def index(directory, thread_list):
     '''
     Create an index.html file showing all the threads in the list.
     '''
-    pass
+    filename = os.path.join(directory, 'index.html')
+
+    thread_list.sort(
+        key = lambda x: x.latest().date if x.count() > 0 else '',
+        reverse = True)
+
+    header = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Threads</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- GENERATED FILE -->
+
+<h1 class="title">Threads</h1>
+<a href="contact.html">Richard Taylor</a>
+
+'''
+    with open(filename, 'w') as index:
+        index.write(header)
+
+        index.write('<table class="index">\n')
+        index.write('<tr>')
+        index.write('<th>Thread</th>')
+        index.write('<th>Articles</th>')
+        index.write('<th>Latest Article</th>')
+        index.write('<th>Date</th>')
+        index.write('</tr>\n')
+
+        for thread in thread_list:
+            thread_index = '<a href="{0}">{1}</a>'.format(
+                os.path.join(thread.directory, 'index.html'),
+                thread.config['name']
+            )
+            count = thread.count()
+            latest = thread.latest()
+            title = latest.title if count > 0 else ''
+            date = latest.date if count > 0 else ''
+
+            if title != '':
+                relative = os.path.relpath(latest.filename, directory)
+                title = '<a href="{0}">{1}</a>'.format(relative, title)
+
+            index.write('<tr>')
+            index.write('<td>{}</td>'.format(thread_index))
+            index.write('<td>{}</td>'.format(count))
+            index.write('<td>{}</td>'.format(title))
+            index.write('<td>{}</td>'.format(date))
+            index.write('</tr>\n')
+
+        index.write('</table>\n')
+        index.write('</body>\n</html>\n')

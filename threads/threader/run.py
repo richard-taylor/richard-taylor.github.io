@@ -15,6 +15,4 @@ thread_list = threads.find(directory)
 for thread in thread_list:
     thread.update()
 
-threads.index(thread_list)
-
-logging.info('Done.')
+threads.index(directory, thread_list)

@@ -1,0 +1,32 @@
+a {
+    text-decoration: none;
+    color: #0000aa;
+}
+body {
+    color: #000000;
+    font-family: Verdana, sans-serif;
+    margin:0 auto;
+    max-width: 60em;
+    padding: 0 2em;
+}
+html {
+    background: #ddddff;
+}
+table.index {
+    border: 1px solid #aaaaaa;
+    border-radius: 1em;
+    margin: 1em 0;
+    padding: 1em;
+    width: 100%;
+}
+table.index th {
+    border-bottom: 1px solid #aaaaaa;
+    border-spacing: 0;
+    padding: 0.5em;
+}
+table.index td {
+    padding: 0.5em;
+}
+table.index td:nth-child(even) {
+    text-align: center;
+}
