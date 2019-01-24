@@ -222,8 +222,8 @@ def index(directory, thread_list):
         index.write('</tr>\n')
 
         for thread in thread_list:
-            thread_index = '<a href="{0}">{1}</a>'.format(
-                os.path.join(thread.directory, 'index.html'),
+            thread_index = '<a href="{0}/index.html">{1}</a>'.format(
+                os.path.basename(thread.directory),
                 thread.config['name']
             )
             count = thread.count()
