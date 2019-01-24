@@ -107,10 +107,10 @@ class TestThreads(unittest.TestCase):
             article.update(None, None)
 
             self.assertTrue(threader.test.help.find_in_file(
-                html, '<span class="previous_article">This is the first article.</span>')
+                html, '<span class="previous_article">This is the first article</span>')
             )
             self.assertTrue(threader.test.help.find_in_file(
-                html, '<span class="next_article">This is currently the latest article.</span>')
+                html, '<span class="next_article">This is the latest article</span>')
             )
         finally:
             os.remove(html)

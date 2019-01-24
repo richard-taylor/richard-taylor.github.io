@@ -42,8 +42,8 @@ class Article():
 
     def update(self, previous_article, next_article):
 
-        previous = self.link(previous_article, 'This is the first article.')
-        next = self.link(next_article, 'This is currently the latest article.')
+        previous = self.link(previous_article, 'This is the first article')
+        next = self.link(next_article, 'This is the latest article')
 
         swaps = [
             Swap('<h1 class="title">{}</h1>', self.title),
@@ -125,7 +125,7 @@ class Thread():
         filename = os.path.join(self.directory, 'index.html')
 
         header = '''<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>{0}</title>
 <link rel="stylesheet" href="style.css"/>
@@ -138,12 +138,11 @@ class Thread():
 <a href="../contact.html">Richard Taylor</a>
 
 '''
-
         with open(filename, 'w') as index:
             index.write(header.format(self.config['name']))
 
             if 'description' in self.config:
-                index.write('<p>' + self.config['description'])
+                index.write('<p>{}\n'.format(self.config['description']))
 
             index.write('<table class="index">\n')
 
@@ -156,7 +155,9 @@ class Thread():
                 index.write('<td>{}</td>'.format(article.date))
                 index.write('</tr>\n')
 
-            index.write('</table>\n</body>\n</html>')
+            index.write('</table>\n')
+            index.write('<div class="nav"><a href="../index.html">More threads...</a></div>\n')
+            index.write('</body>\n</html>\n')
 
 def find(directory):
     '''
