@@ -9,10 +9,14 @@ body {
     max-width: 60em;
     padding: 0 2em;
 }
+h1 + a {
+    margin-left: 0.5em;
+}
 html {
-    background: #ddddff;
+    background: #ddffdd;
 }
 table.index {
+    background: #eeffee;
     border: 1px solid #aaaaaa;
     border-radius: 1em;
     margin: 1em 0;
@@ -20,8 +24,7 @@ table.index {
     width: 100%;
 }
 table.index th {
-    border-bottom: 1px solid #aaaaaa;
-    border-spacing: 0;
+    color: #808080;
     padding: 0.5em;
 }
 table.index td {
