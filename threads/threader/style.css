@@ -27,6 +27,12 @@ html {
 p {
     text-indent: 1em;
 }
+pre > code {
+    background: #bbbbff;
+    border: 1px solid #808080;
+    display: block;
+    padding: 1em 1em 1em 2em;
+}
 span.date_created {
     font-size: 75%;
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Threader Usage</title>
+  <meta name="date.created" content="2019-01-27">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="intro.html">Introduction to Threader</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article"><a href="lessons.html">Lessons Learned</a></span></div>
+
+<h1 class="title">Threader Usage</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-01-27</span>
+
+<p>When you run the threader in a top-level directory it looks for
+sub-directories that appear to be threads. Then it processes each thread and
+adds them all to a top-level index.
+
+<p>There are just 3 requirements to make a directory appear in the threader
+index.
+
+<ol>
+<li>A <code>thread.json</code> file in the directory
+<li>A file that has a <code>title</code> in the <code>head</code> element
+<li>A <code>meta</code> element with the creation date of the article
+</ol>
+
+<p>Lets look at each of those.
+
+<h2>1. Config file</h2>
+
+<p>A thread is configured with a simple JSON file like this:
+
+<pre><code class="json">{
+  "name": "Article Threader",
+  "description": "A python module to link sequences of articles into threads."
+}
+</code></pre>
+
+<p>The "name" and "description" fields are used in the index. Easy.
+
+<h2>2. Title</h2>
+
+<p>The title is used in the index and also in the "previous" and "next" links
+described below. Because I usually have an <code>h1</code> element that also
+contains the title, this can also be automaticaly populated by the threader.
+Just add the class "title".
+
+<pre><code class="html">&lt;h1 class="title"&gt;&lt;/h1&gt;</code></pre>
+
+<h2>3. Creation Date</h2>
+
+<p>The threader uses the creation date to determine the ordering of articles
+in a thread. There is no standard for specifying this, but a common approach
+is to use a <code>meta</code> element like this:
+
+<pre><code class="html">&lt;meta name="date.created" content="2019-01-27"&gt;</code></pre>
+
+As with the title I usually want to include the date in the article itself. To
+avoid repeating yourself you can add the class "date_created" to a
+<code>span</code> element and the date will be inserted automatically.
+
+<pre><code class="html">&lt;span class="date_created"&gt;&lt;/span&gt;</code></pre>
+
+<h2>4. Previous and Next</h2>
+
+<p>As I said above, there are only 3 requirements for a thread article, so this
+part is optional. Without it you can still have threaded articles and an index.
+
+<p>If you want to have links in an article to the immediately preceeding and/or
+following articles in the series then you can do that with a <code>span</code>
+element that has either the "previous_article" or the "next_article" class.
+
+<pre><code class="html">&lt;span class="previous_article"&gt;&lt;/span&gt;
+&lt;span class="next_article"&gt;&lt;/span&gt;
+</code></pre>
+
+<p>The threader will insert anchor elements into these spans which point to
+the right article and have the article's title as the anchor text. For the
+first and last article in a series there is obviously no link to insert so
+the text "This is the first article" or "This is the latest article" is used
+instead.
+
+<p>So if you change the title of an article (in the <code>head</code> element)
+then all you have to do is re-run the threader and all the links will be updated
+in all the neighbouring pages.
+
+<div class="nav"><span class="previous_article"><a href="intro.html">Introduction to Threader</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article"><a href="lessons.html">Lessons Learned</a></span></div>
+</body>
+</html>
