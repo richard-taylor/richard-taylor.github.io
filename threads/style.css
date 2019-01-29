@@ -9,6 +9,13 @@ body {
     max-width: 60em;
     padding: 0 2em;
 }
+div.nav {
+    background: #eeffee;
+    border: 1px solid #aaaaaa;
+    border-radius: 1em;
+    padding: 0.5em;
+    text-align: center;
+}
 h1 + a {
     margin-left: 0.5em;
 }
