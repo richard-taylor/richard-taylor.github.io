@@ -9,6 +9,14 @@ body {
     max-width: 40em;
     padding: 0 2em;
 }
+div.edits {
+    background: #ffffff;
+    border-radius: 1em;
+    color: #808080;
+    font-size: 75%;
+    margin: 0.5em 0;
+    padding: 0.5em;
+}
 div.nav {
     background: #ffffff;
     border-radius: 1em;
