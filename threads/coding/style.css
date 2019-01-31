@@ -1,0 +1,48 @@
+a {
+    text-decoration: none;
+    color: #5511cc;
+}
+body {
+    color: #221122;
+    font-family: Verdana, sans-serif;
+    margin:0 auto;
+    max-width: 40em;
+    padding: 0 2em;
+}
+div.nav {
+    background: #e5cce5;
+    border-radius: 1em;
+    color: #808080;
+    font-size: 75%;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    text-align: center;
+}
+h1 + a {
+    margin-left: 0.5em;
+}
+html {
+    background: #cc99cc;
+}
+p {
+    text-indent: 1em;
+}
+pre > code {
+    background: #ffeef6;
+    border: 1px solid #808080;
+    display: block;
+    padding: 1em 1em 1em 2em;
+}
+span.date_created {
+    font-size: 75%;
+}
+table.index {
+    background: #d4aad4;
+    border: 1px solid #bb77bb;
+    border-radius: 1em;
+    padding: 1em;
+    width: 100%;
+}
+table.index td:last-child {
+    text-align: right;
+}

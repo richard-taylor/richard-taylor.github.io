@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Why Beautiful Code Matters</title>
+  <meta name="date.created" content="2019-01-30">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="nav"><span class="previous_article">This is the first article</span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">Why Beautiful Code Matters</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-01-30</span>
+
+<p>I would hope that everyone who has ever written software for a living would
+agree that this block of code is ugly.
+
+<pre><code class="java">//this class adds numbers
+class NumberAdder {
+    private final int sum;
+ public NumberAdder( int a,int y  ) { sum =y +a;}
+public int getSUM() {
+return sum;
+
+}}
+</code></pre>
+
+<p>And yet I have been given code to review that contains all these "mistakes".
+Thankfully not as concentrated, but there none the less. And usually
+multiple times, even after pointing them out.
+
+<p>The programmers submitting this code were usually very competent. So why
+were they delivering ugly code? It had to be that they did not appreciate the
+value of "beautiful code". Getting the code <em>delivered fast</em> seemed to
+be trumping other considerations.
+
+<p>I gave a talk on "Coding Consisency" subtitled "Why beautiful code is
+important". The reaction was quite surprising. <em>"Cool. I wish we were
+taught this stuff in college."</em> about sums it up.
+
+<p>Here are some of the points from that talk.
+
+<h2>1. Code Layout Matters</h2>
+
+<p>Organisations do not create coding styles to suppress the creativity of
+their employees. The style exists to remove <em>distractions</em> that make
+it harder to understand what someone else has written, or what you wrote
+yourself some time ago. FOr tHE saMe reaSON that ANY WRITteN m@teria1 not
+foLLowING tHe uSUaL convENTion5 i5 haRDer tO FOLlow.
+
+<p>Much as you may hate "the wrong style" chosen by the team you are in, if
+you add code in a different style, then you have made the code as a whole
+harder to read
+and therefore harder to maintain. You have done a disservice to all the people
+who will have to work on that code in the future (most likely including
+yourself).
+
+<p>As an extreme example of where this can lead I once had to modify a big Perl
+script that had evolved over several years. The code was so hard to follow that
+each poor soul tasked with making a change just did their own thing to make it
+work. Whatever it took; just to get the job done and get away from it. Each
+block was in a different style, because there was no consistent style to comply
+with. It was a nightmare. And getting worse.
+
+<h2>2. Bugs</h2>
+
+<p>Good layout conventions can highlight bugs. For example, look at this
+declaration:
+
+<pre><code class="java">enum Flags { BF, AF, GF, CF, FF, DF }
+</code></pre>
+
+You have to look quite hard to spot what is more obvious with this layout:
+
+<pre><code class="java">enum Flags { AF, BF, CF, DF, FF, GF }
+</code></pre>
+
+And even more obvious with this layout:
+
+<pre><code class="java">enum Flags { 
+    AF,
+    BF,
+    CF,
+    DF,
+    FF,
+    GF
+}
+</code></pre>
+
+Namely that there is no "EF" flag. So even though you could say that the
+order of items in an enum does not matter, simply putting them in alphabetical
+order gives clear benefits.
+
+<p>Obvious? I'm always surprised and a bit disappointed when people add a new
+item to the end of a previously alphabetic list. And occassionally someone
+will add an item at a random position in the middle of an alphabetic list...
+
+<p>Also, look at this:
+
+<pre><code class="java">xDimension = 1; xDimension = 2; zDimension = 3;
+</code></pre>
+
+Versus this:
+
+<pre><code class="java">xDimension = 1;
+xDimension = 2;
+zDimension = 3;
+</code></pre>
+
+Where we are setting "xDimension" twice instead of setting "yDimension".
+
+<p>So the key point is "think about the layout". What best exposes the
+intended patterns to readers of the code?
+
+<h2>3. Readability</h2>
+
+<p>The bug visibility above is a product of good readability. In languages
+where white-space is not significant, you have plenty of scope for aiding
+readability by good use of spacing.
+
+<p>Aligning similar things helps readability:
+
+<pre><code class="java">public TypeZ descriptiveMethodName(TypeA aValue,
+                                   TypeB bValue,
+                                   TypeC cValue,
+                                   TypeD dValue) {
+                                   
+  return new TypeZ(combine(aValue, bValue),
+                   combine(cValue, dValue));
+}
+</code></pre>
+
+<p>You can also use blank lines to group related lines of code. Just as short
+paragraphs in text are easier to read than large blocks with no breaks. For
+example:
+
+<pre><code class="java">int x = 5;
+int y = 4;
+
+int sum = x + y;
+int difference = x - y;
+
+verify(x * x - y * y, sum * difference);
+</code></pre>
+
+<p>And of course you should choose good names for things. Unfortunately, as
+Leon Bambrick said, "There are two hard problems in computer science: cache
+invalidation, naming things and off-by-1 errors."
+
+<p>So naming things will get a whole article later in this series. For now
+lets just acknowledge that naming is hard. Especially when working in a team
+that does not have a common first language; and when you have to use a number
+of external libraries with inconsistent naming schemes.
+
+<p>One thing specifically that I see often is contraction of names that
+keeps the less useful information. For example:
+
+<pre><code class="java">Shape sqShape = new Square(2);
+Shape trShape = new Triangle(3, 4, 5);
+</code></pre>
+
+<p>And needless redundancy...
+
+<pre><code class="java">@Test
+public void testForTriangles()
+</code></pre>
+
+<p>And ... no, naming really is a whole article. Think hard about naming
+and talk to your team. Do not be afraid to say in a review "I think this
+would be better called X". Discuss it. Come to an understanding as a group
+about what makes a good name for you.
+
+<h2>4. Comments</h2>
+
+<p>Sometimes code is hard to understand because it does something unexpected.
+For example, in the "Bugs" section above we noticed that a declaration had
+a sequence A, B, C, D, F, G and we surmised that there was a missing E.
+
+<p>But what if the E was left out deliberately? This is exactly the place
+to use a comment.
+
+<pre><code class="java">// There is no EF flag because the Earth is not flat.
+enum Flags { AF, BF, CF, DF, FF, GF }
+</code></pre>
+
+<p>Comments explain <em>why</em> the code is doing something, not <em>what</em>
+it is doing. The code itself describes exactly what it is doing, there is no
+need to comment that.
+
+<p>Try to pre-empt questions that a reviewer might have about the code. Look
+for things that you might think were suspicious in someone else's code and
+explain why there is not a problem.
+
+<pre><code class="c++">a.b.c.d(66);    // none of the intermediates can be NULL
+
+// The last parameter must be NULL or we all die instantly.
+setSelfDestruct(ALL, NULL);
+</code></pre>
+
+<p>If there is more work required on the code, a TODO comment which includes
+the ticket number for that work is really useful. Because without that a TODO
+is basically an excuse for putting something off indefinitely.
+
+<pre><code class="c++">int WWW_END_TIME = 32111;    // TODO : XYZ-666 is this right?
+</code></pre>
+
+<p>When it comes to objects, a comment explaining why it exists is
+an explanation of what the object represents, not how it works.
+
+<pre><code class="java">/**
+ * Representation of a complex number (x + iy)
+ * where i=sqrt(-1) and x,y are floating point numbers.
+ */
+public class Complex
+</code></pre>
+
+<p>Finally, bear in mind that short comments are often extracted by tools to
+create documention. Going back to the ugly code at the start of this article,
+the comment looks harmless if redundant in the context of the code. But extract
+it out into documentation and you get this:
+
+<pre><code class="doc">NumberAdder : this class adds numbers
+</code></pre>
+
+Which looks quite ridiculous and not at all helpful. Compared to
+
+<pre><code class="doc">NumberAdder : An immutable sum of two integers
+</code></pre>
+
+Which describes exactly what it is.
+
+<h2>5. IDE vs Review Tool</h2>
+
+<p>Sometimes your code looks fine in the IDE but the reviewers comment that
+the formatting is broken. Most commonly this is when the IDE does something
+clever with mixtures of TAB characters and spaces. Or there is automatic line
+wrapping or code folding.
+
+<p>Be kind to the reviewers.
+
+<p>When you create a pull-request always <em>check the layout</em> first
+yourself.
+
+<pre><code class="java">public int oops() {
+    // all these lines
+        errors += 3;
+  // looked to be
+    // indented by the same amount in the IDE
+        return errors;
+}
+</code></pre>
+
+<p>It is a shame when you have gone to the trouble of laying out your code
+properly and then make a bad impression on the reviewers because you do not
+spot that you have mad combinations of hard TAB characters and spaces that
+the review tool displays "weirdly".
+
+<h2>6. Summary</h2>
+
+<p>Beautiful code is important because it is
+
+<ul>
+<li>Easier to debug
+<li>Easier to review
+<li>Easier to maintain
+</ul>
+
+<p>Always write useful comments that explain why not how
+
+<ul>
+<li>Explain the non-obvious
+<li>Can be extracted into external documentation
+</ul>
+
+<p>Time spent making your code beautiful is a good investment. Take note of
+comments about style in reviews. Make comments about style in reviews. Do not
+accept ugly code.
+
+<div class="nav"><span class="previous_article">This is the first article</span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
