@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>FMC and Block Building</title>
+  <meta name="date.created" content="2019-02-14">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="intro.html">Introduction to Cubing</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">FMC and Block Building</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-02-14</span>
+
+<p>Fewest Moves Challenge (FMC for short) is an
+<a href="https://www.worldcubeassociation.org/regulations/#article-E-fewest-moves">official WCA event</a>
+where the objective is to solve a 3x3x3 cube in the most efficient way. Speed
+is not an issue, other than an over all time limit of one hour.
+
+<p>The first rule of FMC is "There is no best method for FMC". You have to
+try a lot of different techniques and use your experience and intuition to
+pursue the directions that look most promising for the scramble at hand.
+
+<p>Having said that, there are numerous techniques that you can assemble
+into a toolkit for FMC attempts. One such technique is Block Building.
+
+<h2>Block Building</h2>
+
+<p>What is a block? It is just a collection of adjacent pieces that are
+positioned and oriented correctly relative to each other.
+
+<p>This picture shows the smallest block, a single corner and edge piece
+joined together. As the whole cube is a 3x3x3 then this block is 2x1x1.
+
+<figure class="medium">
+  <img src="pics/block-2x1x1.png" alt="2x1x1 block">
+  <figcaption>2x1x1 Block</figcaption>
+</figure>
+
+<p>There is another way to get a 2x1x1 block and that is to join a centre piece
+with an edge. If you can join both these types of block together then you get
+a 2x2x1 block.
+
+<figure class="medium">
+  <img src="pics/block-2x2x1.png" alt="2x2x1 block">
+  <figcaption>2x2x1 Block</figcaption>
+</figure>
+
+<p>Notice that the four pieces in this block are only solved correctly on the
+white face. To extend to a 2x2x2 block we need another edge and two centres.
+
+<figure class="medium">
+  <img src="pics/block-2x2x2.png" alt="2x2x2 block">
+  <figcaption>2x2x2 Block</figcaption>
+</figure>
+
+<p>How many moves should it take to get this far? I have developed some
+<a href="https://github.com/richard-taylor/rubik">software tools on github</a>
+that can help. Lets take a standard WCA scramble and test it.
+
+<pre><code class="bash"># bin/block222 "L F2 B2 U' B2 L D L2 F' L2 F2 U2 D2 R2 D2 L2 F' U2 F2 R' B"
+INFO: Looking for a solution with 1 turns.
+INFO: Looking for a solution with 2 turns.
+INFO: Looking for a solution with 3 turns.
+INFO: Looking for a solution with 4 turns.
+INFO: Looking for a solution with 5 turns.
+INFO: Solving time: 0.962193 seconds.
+Solutions:
+    B' R' U B L'
+    U' R' D2 R2 B2
+    U L' B' R' B
+    R2 B2 U2 F D
+</code></pre>
+
+<p>For this scramble the shortest "algorithm" to get a 2x2x2 block is 5 moves;
+and there are 4 different ways to do it.
+
+<div class="nav"><span class="previous_article"><a href="intro.html">Introduction to Cubing</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
