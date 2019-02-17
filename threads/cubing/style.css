@@ -1,5 +1,8 @@
 a {
     text-decoration: none;
+    color: #8888ee;
+}
+a:hover {
     color: #aaaaff;
 }
 body {
@@ -18,9 +21,9 @@ div.edits {
     padding: 0.5em;
 }
 div.nav {
-    background: #111133;
+    background: #444488;
     border-radius: 1em;
-    color: #333399;
+    color: #111122;
     font-size: 75%;
     margin: 0.5em 0;
     padding: 0.5em;
@@ -34,13 +37,20 @@ figcaption {
     padding: 0.75em;
     text-align: center;
 }
-figure.big {
+figure {
     margin: 1em auto;
+}
+figure.large {
     width: 100%;
 }
 figure.medium {
-    margin: 1em auto;
     width: 75%;
+}
+figure.small {
+    width: 50%;
+}
+h1 + a {
+    margin-left: 0.5em;
 }
 html {
     background: #333399;
@@ -55,6 +65,7 @@ p {
 pre > code {
     background: #bbbbff;
     border: 1px solid #808080;
+    border-radius: 0.5em;
     display: block;
     padding: 1em 1em 1em 2em;
 }
@@ -62,7 +73,7 @@ span.date_created {
     font-size: 75%;
 }
 table.index {
-    border: 1px solid #808080;
+    border: 1px solid #333333;
     border-radius: 1em;
     padding: 1em;
     width: 100%;
