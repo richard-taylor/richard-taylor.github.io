@@ -198,6 +198,68 @@ Solutions:
   <figcaption>F2L-1</figcaption>
 </figure>
 
+<p>How typical is a 7 move extension from 3x2x2 to F2L-1?
+
+<pre><code class="bash"># bin/distributionf2l-1
+
+Trials: 60000
+
+Frequency distribution:
+
+0 :     69  :   0.115 %
+1 :    222  :   0.370 %
+2 :    475  :   0.792 %
+3 :   2035  :   3.392 %
+4 :   6654  :  11.090 %
+5 :  17874  :  29.790 %
+6 :  23325  :  38.875 %
+7 :   9136  :  15.227 %
+8 :    210  :   0.350 %
+</code></pre>
+
+<p>It looks like 7 is worse than average; and almost the worst case. But
+remember that there were 4 different ways to get our first 2x2x2 block in
+5 moves... what if we try one of the others?
+
+<pre><code class="bash"># bin/block322 "${SCRAMBLE} U L' B' R' B"
+
+INFO: Looking for a solution with 1 turns.
+INFO: Looking for a solution with 2 turns.
+INFO: Looking for a solution with 3 turns.
+INFO: Looking for a solution with 4 turns.
+INFO: Solving time: 0.010598 seconds.
+
+Solutions:
+    L' F2 L D2
+
+# bin/f2L-1 "${SCRAMBLE}  U L' B' R' B  L' F2 L D2"
+
+INFO: Looking for a solution with 1 turns.
+INFO: Looking for a solution with 2 turns.
+INFO: Looking for a solution with 3 turns.
+INFO: Looking for a solution with 4 turns.
+INFO: Looking for a solution with 5 turns.
+INFO: Solving time: 0.139242 seconds.
+
+Solutions:
+    D R D' R F'
+    U F U' R F'
+</code></pre>
+
+<p>So we can actually get to F2L-1 in 5+4+5 = 14 moves instead. Even better,
+the first 5 move solution for F2L-1 gives an additional 2x2x1 block on the
+"top" face as a bonus!
+
+<h2>Summary</h2>
+
+<p>Block Building is a very flexible strategy for FMC. It gives you a few
+achievable way-points to aim for without restricting how to get to them or
+what to do next.
+
+<p>The cost of that flexibility is that it can be hard to know whether your
+progress so far can be extended further. Sometimes what seems to be a great
+3x2x2 block just can't be made into a good F2L-1 in a small number of moves.
+
 <div class="nav"><span class="previous_article"><a href="intro.html">Introduction to Cubing</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
 </body>
 </html>
