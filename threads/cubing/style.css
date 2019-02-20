@@ -49,18 +49,12 @@ figure.medium {
 figure.small {
     width: 50%;
 }
-h1 + a {
-    margin-left: 0.5em;
-}
 html {
     background: #333399;
 }
 img {
     width: 100%;
     border-radius: 0.75em;
-}
-p {
-    text-indent: 1em;
 }
 pre > code {
     background: #bbbbff;
@@ -69,6 +63,15 @@ pre > code {
     color: #111122;
     display: block;
     padding: 1em 1em 1em 2em;
+}
+pre > code.math {
+    font-size: 150%;
+    font-weight: bold;
+    padding: 1em 1em 1em 1em;
+    text-align: center;
+}
+span.alg {
+    font-weight: bold;
 }
 span.date_created {
     font-size: 75%;

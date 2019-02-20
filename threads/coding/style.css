@@ -18,14 +18,8 @@ div.nav {
     padding: 0.5em;
     text-align: center;
 }
-h1 + a {
-    margin-left: 0.5em;
-}
 html {
     background: #cc99cc;
-}
-p {
-    text-indent: 1em;
 }
 pre > code {
     background: #ffeef6;
