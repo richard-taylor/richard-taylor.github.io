@@ -216,7 +216,6 @@ def index(directory, thread_list):
         index.write('<table class="index">\n')
         index.write('<tr>')
         index.write('<th>Thread</th>')
-        index.write('<th>Articles</th>')
         index.write('<th>Latest Article</th>')
         index.write('<th>Date</th>')
         index.write('</tr>\n')
@@ -237,7 +236,6 @@ def index(directory, thread_list):
 
             index.write('<tr>')
             index.write('<td>{}</td>'.format(thread_index))
-            index.write('<td>{}</td>'.format(count))
             index.write('<td>{}</td>'.format(title))
             index.write('<td>{}</td>'.format(date))
             index.write('</tr>\n')
