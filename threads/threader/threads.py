@@ -135,7 +135,7 @@ class Thread():
 <html lang="en">
 <head>
 <title>{0}</title>
-<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -200,7 +200,7 @@ def index(directory, thread_list):
 <html lang="en">
 <head>
 <title>Threads</title>
-<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
