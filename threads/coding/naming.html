@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>A Rose By Any Other Name</title>
+  <meta name="date.created" content="2019-03-16">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="cleancode.html">Why Beautiful Code Matters</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">A Rose By Any Other Name</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-03-16</span>
+
+<h2>Introduction</h2>
+
+<p>"A rose by any other name would smell as sweet" wrote Shakespeare. Sadly
+code doesn't often smell as nice as roses...
+
+<p>Consider this code snippet. What does it do?
+
+<pre><code class="python">a = A(b())
+c = C(d())
+
+return c.e(a)
+</code></pre>
+
+<p>Pretty much impossible to say, unless you have seen the definitions of
+classes A and C and the methods b and d. The names are short, but they are
+not descriptive in any way. Try this version instead.
+
+<pre><code class="python">report = Report(today())
+formatter = Formatter(style())
+
+return formatter.format(report)
+</code></pre>
+
+<p>The code is identical apart from the names. Now we can at least tell that
+some sort of report is being created for the current date and
+formatted in a locally defined style.
+
+<p>What is the report about, though? Is it a daily or monthly report?
+And what is the formatted output? Try yet another version.
+
+<pre><code class="python">report = GlobalServicesMonthlyUtilisationReport(todaysDate())
+formatter = SummarisedTabularUtilisationReportFormatter(utilisationReportStyle())
+
+return formatter.formatReportAsPDF(report)
+</code></pre>
+
+<p>Now we know a lot about what is going on... but the code is hard to read.
+
+<h2>Problem</h2>
+
+<p>The problem with naming things, is that you need names that are short
+enough to be readable, and long enough to be descriptive.
+
+<p>As we saw in the introduction, some names are obviously too short and
+some names are obviously too long. But where is the happy medium? We need
+to compress information into a shortish name. How much can we throw away?
+
+<h2>Context</h2>
+
+<p>The context in which a name is used plays a big role in how much information
+the name needs to retain. For example, in calculations using well known
+formulae very short names can be appropriate.
+
+<pre><code class="python">def total_energy():
+    m = mass()
+    v = speed()
+
+    kinetic = 0.5 * m * v * v
+
+    g = Constants.acceleration_due_to_gravity
+    h = height()
+
+    potential = m * g * h
+
+    return kinetic + potential
+</code></pre>
+
+<p>In general short names only work if they have a very small scope (all the
+uses are near the declaration) and if the name has a well understood meaning
+from mathematical or other technical conventions.
+
+<p>For this reason type names and function / method names need more information
+because they are frequently used out of sight of their declaration.
+
+<pre><code class="python">class ComplexNumber():
+
+    def __init__(real, imaginary):
+        self.real = real
+        self.imaginary = imaginary
+
+...
+
+knownRoot = ComplexNumber(1.0, -1.0)
+</code></pre>
+
+<h2>Abbreviations</h2>
+
+<p>Abbreviations are often a false economy, adding cognitive effort for the
+reader whilst only shortening the code by a small amount. Some abbreviations
+are almost universal, most are not.
+
+<pre><code class="python">max = upper_no()        # number?
+min = lower_number()    # yes!
+</code></pre>
+
+<p>Take care to only abbreviate what is less useful anyway. For example this
+is just silly,
+
+<pre><code class="java">Shape sqShape = new Square(2);
+Shape trShape = new Triangle(3, 4, 5);
+</code></pre>
+
+<p>And compound abbreviations are illegal under the Geneva Conventions.
+
+<pre><code class="java">int minNetBlkAddr = 666;
+</code></pre>
+
+<h2>Grammar</h2>
+
+<p>Use the grammar of the English langauge where you can to capture the
+functionality of the things you name. For example bland, lazy, names do
+not give the reader much information,
+
+<pre><code class="python">report = ReportUtils.getToday()
+wrapped = ReportUtils.addEnvelope(report)
+status = ReportUtils.send(wrapped)
+</code></pre>
+
+<p>Compared to,
+
+<pre><code class="python">todaysReport = DailyReport()
+todaysEmail = ReportEmail(todaysReport)
+sentOK = Emailer.send(todaysEmail)
+</code></pre>
+
+<p>A reader should be able to tell immediately from a name whether it
+represents a <b>thing</b>, an <b>action</b> or a <b>relationship</b>.
+
+<pre><code class="python">Customer()   # thing
+Buy()        # action
+Buyer()      # thing
+Connect()    # action
+Connector()  # thing
+Connection() # relationship
+</code></pre>
+
+<h2>Redundancy</h2>
+
+<p>Most languages and/or programming environments make type-tagging of
+variables redundant these days. It used to be common to see code like,
+
+<pre><code class="python">costInt = 7
+msgString = "Help! I am lost."
+</code></pre>
+
+<p>But usually as either global variables or in very long function definitions.
+If you need to add the type to a variable name then you probably ought to
+refactor your code instead. Unless the type of the variable is not obvious, or
+even counterintuitive. In the following example adding "String" to the name
+makes it clear that the delegate methods take a string parameter not a state
+parameter.
+
+<pre><code class="python">currentState = getState(now())
+check(currentState)
+
+currentStateString = str(currentState)
+delegate.metrics(currentStateString)
+delegate.logging(currentStateString)
+</code></pre>
+
+<p>There is also no need to repeat yourself if the language or framework
+marks the function of something for you. This method is obviously a test,
+so there is no need to call it "testSomething".
+
+<pre><code class="java">@Test
+public void testSomething()
+</code></pre>
+
+<h2>Camels and Snakes</h2>
+
+<p>I am not going to advocate for CamelCaseNames or snake_case_names or
+alllowercasenames or ALLUPPERCASENAMES. That is usually a matter for your
+coding style to settle. But I will add a word of warning... always give a
+moment's thought to how your names will read if they are transformed into
+an alternative style.
+
+<p>This is best illustrated with two real-world examples.
+
+<ol>
+    <li><b>Experts Exchange</b> was a perfectly good name until someone
+        wrote it in all lowercase as "expertsexchange" and then for many
+        people it was hard to not read it as "expert sex change".
+    <li><b>Susan Album Party</b> was the title of an event tweeted about in
+        2012 with the hashtag "#susanalbumparty" until someone spotted that
+        it might be misread and changed it.
+</ol>
+
+<h2>Consistency</h2>
+
+<p>Ah. The "C" word. You might wonder why I put this last. Surely it is an
+easy guideline to state "use consistent names". And it is easy to state.
+But it is really hard to do. Especially when working in a team that does
+not have a common first language; and when you have to use a number of
+external libraries with inconsistent naming schemes.
+
+<p>It often helps to use the same terminology in your code as the business
+running the code uses to define what it does. If the business deals with
+customers then have a <code>Customer</code> object to represent that; don't
+call it <code>Account</code> because that's what you think makes sense to
+you as a programmer.
+
+<p>Sometimes having a team without a common first language can help. Because
+you are almost guaranteed to not all think the same names are "obvious" or
+even "OK". That will either force you to discuss names during reviews (or
+earlier, ideally) and you will come to agree on good names... or your team
+will collapse in a heap of despair and you will all go your separate ways.
+
+<h2>Summary</h2>
+
+<p>Naming things is hard. Especially if you think that it isn't and everyone
+else just needs to try a bit harder to understand what you meant.
+
+<p>Think hard about naming and talk to your team. Do not be afraid to say in
+a review "I think this would be better called X". Discuss it. Come to an
+understanding as a group (coders and business stakeholders) about what makes
+a set of good names for you.
+
+<div class="nav"><span class="previous_article"><a href="cleancode.html">Why Beautiful Code Matters</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
