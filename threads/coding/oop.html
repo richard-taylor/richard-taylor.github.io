@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Object of Perfection</title>
+  <meta name="date.created" content="2019-06-25">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="naming.html">A Rose By Any Other Name</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">The Object of Perfection</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-06-25</span>
+
+<h2>Introduction</h2>
+
+<p>One of the problems that I have with "Object Oriented Programming" is that
+the word "Object" itself can send people down the wrong path. Because we learn
+at school that sentences have a "subject + verb + object" structure, we are
+likely to be biased towards thinking of an "object" as a thing that something
+happens to.
+
+<p>Instead I like to think of an Object as representing a Concept. Any kind
+of concept - a thing, an action or a relationship.
+
+<h2>Basic Object Orientation</h2>
+
+<p>Let's take a simple example from geometry of a two-dimensional point. We
+can represent a point with an object. The object can contain data and it can
+have methods.
+
+<pre><code class="java">Point p = new Point(1, 2);
+Point q = new Point(1, 3);
+
+float d = p.distanceTo(q);
+</code></pre>
+
+<p>This style of OOP is sometimes called "ask don't tell". All the data is
+hidden in the Point object and we ask it to compute things instead of getting
+the data out to compute things ourselves.
+
+<p>Which is fine if we know all the questions that an object might be asked,
+or if we are happy to always add new methods for new questions.
+
+<pre><code class="java">float e = p.euclideanDistanceTo(q);
+float m = p.minkowskiDistanceTo(q);
+
+// what does the original p.distanceTo(q) do now?
+</code></pre>
+
+<p>But then you also have to decide whether to remove old methods that might
+no longer have a clear function... but may be in wide use by other code.
+
+<p>Sometimes you start with a very well defined, small, concept that will
+never be extended. So you go with "ask don't tell" and everything is fine.
+Until the concept does need to be extended after all.
+
+<h2>Objects Represent Concepts</h2>
+
+<p>In the Point example above we assumed that a distance was a simple number
+and that there was only one way to calculate the one true distance between
+points.
+
+<p>But distance is a concept, so we could have a Distance object instead.
+
+<pre><code class="java">Point p = new Point(1, 2);
+Point q = new Point(1, 3);
+
+Distance d = new Distance(p, q);
+</code></pre>
+
+<p>And then we can extend that concept without changing the Point concept.
+
+<pre><code class="java">Distance e = new EuclideanDistance(p, q);
+Distance m = new MinkowskiDistance(p, q);
+</code></pre>
+
+<p>Also, we can express a distance between Point and Line objects...
+
+<pre><code class="java">Line line = new Line(p, q);
+Distance d = new EuclideanDistance(p, line);
+</code></pre>
+
+<p>Whereas with "ask don't tell" you have to choose to add the distance
+method to either the Point object or the Line object, or both?
+
+<pre><code class="java">// a equals b
+
+float a = p.distanceTo(line);
+float b = line.distanceTo(p);
+</code></pre>
+
+<h2>Actions Are Also Concepts</h2>
+
+<p>When it comes to actions, it is common to think of the thing performing
+the action as an object, with the action then being a method.
+
+<pre><code class="java">Object obj = getSuspect();
+Validator v = getValidator();
+
+Boolean b = v.validate(obj);
+</code></pre>
+
+<p>Sometimes it is neater to represent the action itself as an object;
+especially if the action has multiple properties:
+
+<pre><code class="java">Object obj = getSuspect();
+Validate v = new Validate(obj);
+
+Boolean b = v.asBoolean();
+List&lt;String&gt; gripes = v.errors();
+</code></pre>
+
+<p>And action objects make a lot of sense if you are dealing with a set of
+related actions. For example, if you have a robot that can execute different
+types of movement, then representing each movement as an object seems quite
+natural:
+
+<pre><code class="java">Robot mickey = new Robot("Mickey");
+List&lt;Move&gt; moves = getPreMoves();
+
+moves.add(new Turn(90));
+moves.add(new Walk(20));
+
+mickey.do(moves);
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>In "object oriented programming" it is easy to see how objects can be used
+to represent "things" such as:
+
+<ul>
+<li>File
+<li>Point
+<li>User
+</ul>
+
+<p>But it is less obvious to see that objects can also represent relationships:
+
+<ul>
+<li>Link
+<li>Distance
+<li>Partnership
+</ul>
+
+<p>Actions can also be represented by objects:
+
+<ul>
+<li>Delete
+<li>Translate
+<li>Promote
+</ul>
+
+<p>And the real power of OOP comes when objects are used to represent all
+of these different types of concepts, not just the "things".
+
+<div class="nav"><span class="previous_article"><a href="naming.html">A Rose By Any Other Name</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+</body>
+</html>
