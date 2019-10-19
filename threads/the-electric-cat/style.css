@@ -18,12 +18,36 @@ div.nav {
     padding: 0.5em;
     text-align: center;
 }
+figcaption {
+    background: #006666;
+    border-radius: 0.75em;
+    color: #009999;
+    font-size: 75%;
+    padding: 0.75em;
+    text-align: center;
+}
+figure {
+    margin: 1em auto;
+}
+figure.large {
+    width: 100%;
+}
+figure.medium {
+    width: 75%;
+}
+figure.small {
+    width: 50%;
+}
 html {
     background: #009999;
 }
+img {
+    width: 100%;
+    border-radius: 0.75em;
+}
 pre > code {
-    background: #ffeef6;
-    border: 1px solid #808080;
+    background: #99ffff;
+    border: 1px solid #004d4d;
     display: block;
     padding: 1em 1em 1em 2em;
 }
