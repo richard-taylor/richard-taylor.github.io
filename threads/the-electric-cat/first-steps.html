@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>First Steps</title>
+  <meta name="date.created" content="2019-10-21">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="intro.html">Introduction to The Electric Cat</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">First Steps</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-10-21</span>
+
+<p>OK. We know what we want. Roughly. So where do we start?
+
+<p>Let's do this in an Agile way. We wont design everything up front, because
+we only have a rough idea of what we want. Start with what we know, lay down
+some basic principles, then build a minimal prototype.
+
+<figure class="medium">
+  <img src="pics/table.png" alt="Cat Planner">
+  <figcaption>What shall we do first?</figcaption>
+</figure>
+
+<h2>First Principles</h2>
+
+<p>The goal of the project is to <em>connect and map whatever items you
+need to track</em>.
+
+<p>So that gives us a number of concepts to consider:
+
+<ul>
+<li>Connections
+<li>Maps
+<li>Items
+<li>People
+<li>Tracking
+</ul>
+
+<p>We can explore each of these and make some initial notes on their most
+important properties.
+
+<h3>Item</h3>
+
+<p>As I mentioned in the introduction, this project aims to support many
+different types of item. Off the top of my head I can think of:
+
+<ul>
+<li>requirement
+<li>epic
+<li>story
+<li>task
+<li>bug
+<li>commit
+<li>test case
+<li>test suite
+<li>document
+<li>peer review
+<li>release
+</ul>
+
+<p>And there will be more. So an important feature will be that we must be able
+to extend the set of item types at any time.
+
+<p>We also want to be able to map these items. Which implies that all items must
+have properties or labels that can be mapped to numerical values.
+
+<h3>Connection</h3>
+
+<p>A connection is a link between items. There are all sorts of different
+connections I can think of; for example:
+
+<ul>
+<li>satisfies
+<li>implements
+<li>explains
+<li>blocks
+<li>affects
+</ul>
+
+<p>And many more. So, as with items, we must be able to
+extend the set of link types at any time.
+
+<h3>People</h3>
+
+<p>Items and connections are created and managed by people. We need to
+represent that, so we can track who did what and when.
+
+<h3>Map</h3>
+
+<p>This is the biggest unknown at this stage. I talked about maps being
+different from graphs in the introduction, but what can be usefully mapped
+is still open and will require some experimentation and more thought.
+
+<h3>Tracking</h3>
+
+<p>Perhaps the most important requirement is tracking. If you have ever worked
+in a safety critical environment then you will know how strict the auditing is.
+And that level of discipline could be very useful in "ordinary" projects too,
+if it was easier to apply.
+
+<p>Some of the implications of strong tracking are:
+
+<ul>
+<li>All entities have immutable fields like "creator" and "creation time"
+<li>All changes are fully logged
+</ul>
+
+<p>Which means that "the log is the database" is an option. In other words,
+there has to be enough information in the log to reproduce the data, so why
+do you need a separate database? [answers on a postcard]
+
+<p>It is also worth considering making all operations reversible up front,
+since adding "undo" functionality later is always a pain.
+
+<h2>First Version</h2>
+
+<p>To get something working quickly I am going to focus on an API to build and
+connect items. It will use an in-memory store and log all the changes.
+
+<p>I will write a set of tests to exercise the API from different "client"
+perspectives.
+
+<p>Then, in later versions, I will consider persistent storage and
+user interfaces.
+
+<div class="nav"><span class="previous_article"><a href="intro.html">Introduction to The Electric Cat</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
