@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Data Models - part 1</title>
+  <meta name="date.created" content="2019-11-12">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="bare-bones.html">Bare Bones</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">Data Models - part 1</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2019-11-12</span>
+
+<p>I am calling this "part 1" because I don't expect to get it right first
+time. Partly because I am only thinking about the external view of the data
+at this stage: by which I mean the data as it is handled by the API.
+
+<figure class="medium">
+  <img src="pics/thinking.png" alt="Thinking Shapes">
+  <figcaption>I'm thinking of a shape</figcaption>
+</figure>
+
+<p>Which is quite deliberate. I want to get the main concepts sorted out in
+the API first, so that I can completely decouple the internal representation
+from whatever UI frameworks I try out later.
+
+<h2>Get Started</h2>
+
+<p>It's often hard to get started when you are staring at a blank page. So I
+usually blast down something to get me going and then rewrite it as I think
+through the implications.
+
+<p>Lets start with the most basic data. We have <em>Items</em> and
+<em>Links</em> that we want to be trackable. So that says to me that we need a
+<em>Trackable</em> base class to hold the tracking; and other classes that
+extend it with their own specific data and functionality.
+
+<pre><code class="python">class Trackable
+class Item(Trackable)
+class Link(Trackable)
+class User(Trackable)
+</code></pre>
+
+<p>Then again, maybe composition is better than inheritance. Which of these
+statements makes more sense:
+an Item <em>is a</em> Trackable thing;
+or an Item <em>has a</em> Trackable thing?
+
+<p>To me, both seem very similar. And the good news is that for now at least
+the choice is invisible to users of the classes so I'll stick with inheritance
+and change later if needs be.
+
+<p>I wouldn't normally make lots of commits while playing at this stage, but
+to illustrate the process here is a
+<a href="https://github.com/richard-taylor/thelca/commit/4ba79d212592e3cd95b7eba4793c24c2dee47b8a">very
+early version</a> of the model.
+
+<p>Notice that I am deliberately populating all fields with built-in types
+rather than library classes:
+
+<pre><code class="python">self.id = str(uuid.uuid4())
+self.created_by = created_by.id
+self.created_at = datetime.datetime.utcnow().isoformat()
+</code></pre>
+
+<p>One reason for this is that I want to be able to convert these models to
+JSON really easily, without defining custom converters. The second is that
+I don't want Trackable objects to contain nested Trackable objects; instead
+I want these objects to reference other Trackable objects.
+
+<p>For example. Rather than storing the User who created an Item inside each
+Item like this:
+
+<pre><code class="json">{
+  'id': '1b8d44d0-0fba-11ea-9cb9-b707013a9afa',
+  'created_by': {
+      'id': '271d411a-0fba-11ea-8c2b-23aad820de64',
+      'name': 'The Electric Cat',
+      'email': 'electric.cat@example.org',
+      'shoe-size': 'N/A'
+  }
+  'type': 'STORY',
+  'properties': {
+      'DESCRIPTION': 'Once upon a time there were three bears...'
+  }
+}
+</code></pre>
+
+<p>I simply want to record the <em>id</em> of the User like this:
+
+<pre><code class="json">{
+  'id': '1b8d44d0-0fba-11ea-9cb9-b707013a9afa',
+  'created_by': '271d411a-0fba-11ea-8c2b-23aad820de64',
+  'type': 'STORY',
+  'properties': {
+    'DESCRIPTION': 'Once upon a time there were three bears...'
+  }
+}
+</code></pre>
+
+<p>Because that is more compact, avoids returning data that might not be
+required and avoids returning multiple copies of the same data.
+
+<h2>Design Choices</h2>
+
+<p>So you can see, even with these early stages of model design, I am making
+design choices. I'm thinking about how these classes might be used. And
+something that always helps with that is writing unit tests.
+
+<p>Take a look at the tests in the
+<a href="https://github.com/richard-taylor/thelca/commit/4ba79d212592e3cd95b7eba4793c24c2dee47b8a">linked
+commit</a>. I am creating objects in different ways and making some assertions
+about their properties. What should the ID of an empty Item be?
+
+<p>These tests help me think about how I will use the objects I am writing. Do
+I write all the tests first? TDD? No, not all the time. Here I actually wrote
+the test_empty tests before the code, but then wrote some of the code before
+adding the other tests.
+
+<p>Now I am thinking about how these classes look in action. I am wondering if
+'type' should be a top-level field of Item and Link after all... or maybe it
+should just be part of the properties?
+
+<pre><code class="python"># A
+item = Item(self.user, 'EPIC', {'DESCRIPTION': 'big'});
+
+# B
+item = Item(self.user, {'TYPE': 'EPIC', 'DESCRIPTION': 'big'});
+</code></pre>
+
+<p>What's the rationale for keeping it separate? It looked fine in the
+module code, but in use it looks odd. Because it is not fixed, the type of
+an Item could be changed from EPIC to STORY, just as the DESCRIPTION can be
+changed. So it looks like it should be a property.
+
+<p>With that change made, maybe next we can look at an API to read and write
+these objects.
+
+<div class="nav"><span class="previous_article"><a href="bare-bones.html">Bare Bones</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
