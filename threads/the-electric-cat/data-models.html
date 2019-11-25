@@ -80,7 +80,7 @@ Item like this:
       'name': 'The Electric Cat',
       'email': 'electric.cat@example.org',
       'shoe-size': 'N/A'
-  }
+  },
   'type': 'STORY',
   'properties': {
       'DESCRIPTION': 'Once upon a time there were three bears...'
@@ -124,10 +124,10 @@ adding the other tests.
 should just be part of the properties?
 
 <pre><code class="python"># A
-item = Item(self.user, 'EPIC', {'DESCRIPTION': 'big'});
+item = Item(self.user, 'EPIC', {'DESCRIPTION': 'big'})
 
 # B
-item = Item(self.user, {'TYPE': 'EPIC', 'DESCRIPTION': 'big'});
+item = Item(self.user, {'TYPE': 'EPIC', 'DESCRIPTION': 'big'})
 </code></pre>
 
 <p>What's the rationale for keeping it separate? It looked fine in the
