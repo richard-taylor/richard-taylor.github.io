@@ -16,3 +16,4 @@ for thread in thread_list:
     thread.update()
 
 threads.index(directory, thread_list)
+threads.rss(directory, thread_list)

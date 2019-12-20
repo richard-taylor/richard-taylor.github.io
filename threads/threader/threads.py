@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 import os
@@ -239,4 +240,53 @@ def index(directory, thread_list):
             index.write('</tr>\n')
 
         index.write('</table>\n')
+        index.write('<p><a href="rss.xml">RSS feed</a>\n')
         index.write('</body>\n</html>\n')
+
+def rss(directory, thread_list):
+    '''
+    Create an rss.xml file showing the 10 most recent thread articles.
+    '''
+    filename = os.path.join(directory, 'rss.xml')
+
+    article_list = []
+    for thread in thread_list:
+        category = thread.config['name']
+        for article in thread.articles:
+            article.category = category
+            article_list.append(article)
+
+    article_list.sort(key = lambda x: x.date, reverse = True)
+    last10 = article_list[0:10]
+
+    header = '''<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Richard Taylor's Threads</title>
+<link>https://richard-taylor.github.io/threads/index.html</link>
+<description>Series of articles by Richard Taylor BEng PhD</description>
+<language>en</language>
+'''
+    base_url = 'https://richard-taylor.github.io/threads/'
+
+    with open(filename, 'w') as rss:
+        rss.write(header)
+
+        iso8601 = '%Y-%m-%d'
+        rfc822 = '%a, %d %b %Y 19:15:00 GMT'
+
+        for article in last10:
+            relative = os.path.relpath(article.filename, directory)
+            link = base_url + relative
+
+            date = datetime.datetime.strptime(article.date, iso8601)
+            pub_date = date.strftime(rfc822)
+
+            rss.write('<item>\n')
+            rss.write('<title>{}</title>\n'.format(article.title))
+            rss.write('<link>{}</link>\n'.format(link))
+            rss.write('<pubDate>{}</pubDate>\n'.format(pub_date))
+            rss.write('<category>{}</category>\n'.format(article.category))
+            rss.write('</item>\n')
+
+        rss.write('</channel>\n</rss>\n')
