@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Richard Taylor's Threads</title>
+<link>https://richard-taylor.github.io/threads/index.html</link>
+<description>Series of articles by Richard Taylor BEng PhD</description>
+<language>en</language>
+<item>
+<title>Data Models - part 1</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/data-models.html</link>
+<pubDate>Tue, 12 Nov 2019 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
+<title>Bare Bones</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/bare-bones.html</link>
+<pubDate>Tue, 05 Nov 2019 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
+<title>First Steps</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/first-steps.html</link>
+<pubDate>Mon, 21 Oct 2019 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
+<title>Introduction to The Electric Cat</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/intro.html</link>
+<pubDate>Wed, 09 Oct 2019 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
+<title>The Object of Perfection</title>
+<link>https://richard-taylor.github.io/threads/coding/oop.html</link>
+<pubDate>Tue, 25 Jun 2019 19:15:00 GMT</pubDate>
+<category>Professional Coding Techniques</category>
+</item>
+<item>
+<title>A Rose By Any Other Name</title>
+<link>https://richard-taylor.github.io/threads/coding/naming.html</link>
+<pubDate>Sat, 16 Mar 2019 19:15:00 GMT</pubDate>
+<category>Professional Coding Techniques</category>
+</item>
+<item>
+<title>Inverse Scramble and NISS</title>
+<link>https://richard-taylor.github.io/threads/cubing/fmc-niss.html</link>
+<pubDate>Sat, 23 Feb 2019 19:15:00 GMT</pubDate>
+<category>Cubing Tools And Tricks</category>
+</item>
+<item>
+<title>FMC and Block Building</title>
+<link>https://richard-taylor.github.io/threads/cubing/fmc-blocks.html</link>
+<pubDate>Thu, 14 Feb 2019 19:15:00 GMT</pubDate>
+<category>Cubing Tools And Tricks</category>
+</item>
+<item>
+<title>Introduction to Cubing</title>
+<link>https://richard-taylor.github.io/threads/cubing/intro.html</link>
+<pubDate>Sun, 10 Feb 2019 19:15:00 GMT</pubDate>
+<category>Cubing Tools And Tricks</category>
+</item>
+</channel>
+</rss>
