@@ -26,14 +26,11 @@ div.nav {
     padding: 0.5em;
     text-align: center;
 }
-h1 + a {
-    margin-left: 0.5em;
-}
 html {
     background: #ddddff;
 }
 p {
-    text-indent: 1em;
+    text-indent: 0.25em;
 }
 pre > code {
     background: #bbbbff;

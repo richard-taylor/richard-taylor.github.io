@@ -53,6 +53,7 @@ class TestThreads(unittest.TestCase):
         a = threader.threads.Article('examples/t1/small.html')
         self.assertEqual('The Title', a.title)
         self.assertEqual('2018-12-31', a.date)
+        self.assertEqual('a short piece of descriptive text', a.description)
 
     def test_bad_filenames(self):
         try:

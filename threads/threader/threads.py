@@ -15,6 +15,7 @@ class Article():
         self.filename = filename
         self.title = None
         self.date = None
+        self.description = None
 
         if filename.endswith('.html') \
           and os.path.basename(filename) != 'index.html':
@@ -37,6 +38,10 @@ class Article():
                 dm = re.search(r'<meta name="date.created" content="(.+)">', line)
                 if dm:
                     self.date = dm.group(1)
+
+                dm = re.search(r'<meta name="description" content="(.+)">', line)
+                if dm:
+                    self.description = dm.group(1)
 
                 if '</head>' in line:
                     return
@@ -165,6 +170,7 @@ class Thread():
 
             index.write('</table>\n')
             index.write('<div class="nav"><a href="../index.html">More threads...</a></div>\n')
+            index.write('<p><a href="../rss.xml">RSS feed</a>\n')
             index.write('</body>\n</html>\n')
 
 def find(directory):
@@ -285,6 +291,10 @@ def rss(directory, thread_list):
             rss.write('<item>\n')
             rss.write('<title>{}</title>\n'.format(article.title))
             rss.write('<link>{}</link>\n'.format(link))
+
+            if article.description is not None:
+                rss.write('<description>{}</description>'.format(article.description))
+
             rss.write('<pubDate>{}</pubDate>\n'.format(pub_date))
             rss.write('<category>{}</category>\n'.format(article.category))
             rss.write('</item>\n')
