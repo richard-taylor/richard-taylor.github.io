@@ -12,6 +12,7 @@ body {
     margin: 0 auto;
     max-width: 40em;
     padding: 0 5px;
+    text-align: justify;
 }
 div.edits {
     background: #ffffff;
