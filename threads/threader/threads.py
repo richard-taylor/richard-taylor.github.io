@@ -293,7 +293,7 @@ def rss(directory, thread_list):
             rss.write('<link>{}</link>\n'.format(link))
 
             if article.description is not None:
-                rss.write('<description>{}</description>'.format(article.description))
+                rss.write('<description>{}</description>\n'.format(article.description))
 
             rss.write('<pubDate>{}</pubDate>\n'.format(pub_date))
             rss.write('<category>{}</category>\n'.format(article.category))
