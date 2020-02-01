@@ -11,8 +11,7 @@ body {
     font-size: 18pt;
     margin: 0 auto;
     max-width: 40em;
-    padding: 0 5px;
-    text-align: justify;
+    padding: 0 1em;
 }
 div.nav {
     background: #ffcccc;
@@ -25,6 +24,9 @@ div.nav {
 }
 html {
     background: #ffbbbb;
+}
+p {
+    text-align: justify;
 }
 span.date_created {
     font-size: 75%;

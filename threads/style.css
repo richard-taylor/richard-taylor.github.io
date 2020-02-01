@@ -8,8 +8,7 @@ body {
     font-size: 18pt;
     margin:0 auto;
     max-width: 40em;
-    padding: 0 5px;
-    text-align: justify;
+    padding: 0 1em;
 }
 div.nav {
     background: #eeffee;
@@ -19,6 +18,9 @@ div.nav {
 }
 html {
     background: #ddffdd;
+}
+p {
+    text-align: justify;
 }
 table.index {
     background: #eeffee;

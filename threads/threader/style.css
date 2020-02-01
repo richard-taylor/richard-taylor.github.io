@@ -8,8 +8,7 @@ body {
     font-size: 18pt;
     margin:0 auto;
     max-width: 40em;
-    padding: 0 5px;
-    text-align: justify;
+    padding: 0 1em;
 }
 div.edits {
     background: #ffffff;
@@ -32,6 +31,7 @@ html {
     background: #ddddff;
 }
 p {
+    text-align: justify;
     text-indent: 0.25em;
 }
 pre > code {
