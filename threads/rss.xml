@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>RSS Is Alive And Well</title>
+<link>https://richard-taylor.github.io/threads/threader/rss.html</link>
+<description>A look at why I added RSS support to the threader, why I think RSS is still important, and why you should too.</description>
+<pubDate>Sat, 01 Feb 2020 19:15:00 GMT</pubDate>
+<category>Article Threader</category>
+</item>
+<item>
 <title>Basic API</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/basic-api.html</link>
 <pubDate>Fri, 20 Dec 2019 19:15:00 GMT</pubDate>
@@ -57,12 +64,6 @@
 <title>FMC and Block Building</title>
 <link>https://richard-taylor.github.io/threads/cubing/fmc-blocks.html</link>
 <pubDate>Thu, 14 Feb 2019 19:15:00 GMT</pubDate>
-<category>Cubing Tools And Tricks</category>
-</item>
-<item>
-<title>Introduction to Cubing</title>
-<link>https://richard-taylor.github.io/threads/cubing/intro.html</link>
-<pubDate>Sun, 10 Feb 2019 19:15:00 GMT</pubDate>
 <category>Cubing Tools And Tricks</category>
 </item>
 </channel>
