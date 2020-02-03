@@ -19,6 +19,16 @@ div.nav {
     padding: 0.5em;
     text-align: center;
 }
+dl.index {
+    background: #d4aad4;
+    border: 1px solid #bb77bb;
+    border-radius: 1em;
+    width: 100%;
+}
+dl.index dt {
+    color: #606060;
+    padding: 0.25em 0.75em;
+}
 html {
     background: #cc99cc;
 }
@@ -33,14 +43,4 @@ pre > code {
 }
 span.date_created {
     font-size: 75%;
-}
-table.index {
-    background: #d4aad4;
-    border: 1px solid #bb77bb;
-    border-radius: 1em;
-    padding: 1em;
-    width: 100%;
-}
-table.index td:last-child {
-    text-align: right;
 }

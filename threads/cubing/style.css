@@ -30,6 +30,15 @@ div.nav {
     padding: 0.5em;
     text-align: center;
 }
+dl.index {
+    border: 1px solid #333333;
+    border-radius: 1em;
+    width: 100%;
+}
+dl.index dt {
+    color: #606060;
+    padding: 0.25em 0.75em;
+}
 figcaption {
     background: #111133;
     border-radius: 0.75em;
@@ -79,13 +88,4 @@ span.alg {
 }
 span.date_created {
     font-size: 75%;
-}
-table.index {
-    border: 1px solid #333333;
-    border-radius: 1em;
-    padding: 1em;
-    width: 100%;
-}
-table.index td:last-child {
-    text-align: right;
 }

@@ -16,6 +16,21 @@ div.nav {
     padding: 0.5em;
     text-align: center;
 }
+dl.index {
+    background: #eeffee;
+    border: 1px solid #aaaaaa;
+    border-radius: 1em;
+    width: 100%;
+}
+dl.index dt {
+    padding: 0.25em 0.75em;
+}
+dl.index dd {
+    color: #a0a0a0;
+    font-size: 75%;
+    margin-left: 1em;
+    padding: 0.25em 0.75em 0.75em 0.75em;
+}
 html {
     background: #ddffdd;
 }
@@ -27,25 +42,4 @@ ol li {
 }
 p {
     text-align: justify;
-}
-table.index {
-    background: #eeffee;
-    border: 1px solid #aaaaaa;
-    border-radius: 0.5em;
-    margin: 1em 0;
-    padding: 0.1em;
-    width: 100%;
-}
-table.index th {
-    color: #808080;
-    padding: 0.5em;
-}
-table.index td {
-    background: #e0f0e0;
-    border-radius: 0.5em;
-    padding: 0.5em;
-    text-align: left;
-}
-table.index td:last-child {
-    text-align: center;
 }

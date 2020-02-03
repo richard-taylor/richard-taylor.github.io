@@ -157,18 +157,15 @@ class Thread():
             if 'description' in self.config:
                 index.write('<p>{}\n'.format(self.config['description']))
 
-            index.write('<table class="index">\n')
+            index.write('<dl class="index">\n')
 
             for article in self.articles:
                 link = '<a href="{0}">{1}</a>'.format(
                   os.path.basename(article.filename), article.title
                 )
-                index.write('<tr>')
-                index.write('<td>{}</td>'.format(link))
-                index.write('<td>{}</td>'.format(article.date))
-                index.write('</tr>\n')
+                index.write('<dt>{} {}</dt>\n'.format(article.date, link))
 
-            index.write('</table>\n')
+            index.write('</dl>\n')
             index.write('<div class="nav"><a href="../index.html">More threads...</a></div>\n')
             index.write('<p><a href="../rss.xml">RSS feed</a>\n')
             index.write('</body>\n</html>\n')
@@ -220,11 +217,7 @@ def index(directory, thread_list):
     with open(filename, 'w') as index:
         index.write(header)
 
-        index.write('<table class="index">\n')
-        index.write('<tr>')
-        index.write('<th>Thread / Latest Article</th>')
-        index.write('<th>Date</th>')
-        index.write('</tr>\n')
+        index.write('<dl class="index">\n')
 
         for thread in thread_list:
             thread_index = '<a href="{0}/index.html">{1}</a>'.format(
@@ -240,12 +233,10 @@ def index(directory, thread_list):
                 relative = os.path.relpath(latest.filename, directory)
                 title = '<a href="{0}">{1}</a>'.format(relative, title)
 
-            index.write('<tr>')
-            index.write('<td>{}<br>... {}</td>'.format(thread_index, title))
-            index.write('<td>{}</td>'.format(date))
-            index.write('</tr>\n')
+            index.write('<dt>{}</dt>\n'.format(thread_index))
+            index.write('<dd>{} {}</dd>\n'.format(date, title))
 
-        index.write('</table>\n')
+        index.write('</dl>\n')
         index.write('<p><a href="rss.xml">RSS feed</a>\n')
         index.write('</body>\n</html>\n')
 
