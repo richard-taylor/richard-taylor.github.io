@@ -44,7 +44,7 @@ formatted in a locally defined style.
 And what is the formatted output? Try yet another version.
 
 <pre><code class="python">report = GlobalServicesMonthlyUtilisationReport(todaysDate())
-formatter = SummarisedTabularUtilisationReportFormatter(utilisationReportStyle())
+formatter = SummarisedTabularReportFormatter(reportStyle())
 
 return formatter.formatReportAsPDF(report)
 </code></pre>

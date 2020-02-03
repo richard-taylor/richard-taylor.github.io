@@ -59,7 +59,10 @@ white face. To extend to a 2x2x2 block we need another edge and two centres.
 <a href="https://github.com/richard-taylor/rubik">software tools on github</a>
 that can help. Lets take a standard WCA scramble and test it.
 
-<pre><code class="bash"># bin/block222 "L F2 B2 U' B2 L D L2 F' L2 F2 U2 D2 R2 D2 L2 F' U2 F2 R' B"
+<pre><code class="bash"># SCRAMBLE=\
+"L F2 B2 U' B2 L D L2 F' L2 F2 U2 D2 R2 D2 L2 F' U2 F2 R' B"
+
+# bin/block222 "${SCRAMBLE}"
 
 INFO: Looking for a solution with 1 turns.
 INFO: Looking for a solution with 2 turns.
@@ -111,8 +114,9 @@ pretty rare, and about as likely as 0 moves.
 into a 3x2x2 block. Lets take the previous scramble and one of the 2x2x2
 solutions to see what we get when we try and extend to 3x2x2.
 
-<pre><code class="bash"># SCRAMBLE="L F2 B2 U' B2 L D L2 F' L2 F2 U2 D2 R2 D2 L2 F' U2 F2 R' B"
-#
+<pre><code class="bash"># SCRAMBLE=\
+"L F2 B2 U' B2 L D L2 F' L2 F2 U2 D2 R2 D2 L2 F' U2 F2 R' B"
+
 # bin/block322 "${SCRAMBLE} B' R' U B L'"
 
 INFO: Looking for a solution with 1 turns.

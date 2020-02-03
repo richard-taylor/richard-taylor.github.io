@@ -58,7 +58,8 @@ fit inside the <em>http</em> module.
 </code></pre>
 
 <p>And then this shows that I can GET the data back later:
-<pre><code class="bash"># curl http://localhost:2207/v1/items/2d146ed4-7fc2-49fd-a929-b2f5af16f27b | jq
+<pre><code class="bash"># id=2d146ed4-7fc2-49fd-a929-b2f5af16f27b
+# curl http://localhost:2207/v1/items/$id | jq
 {
   "id": "2d146ed4-7fc2-49fd-a929-b2f5af16f27b",
   "properties": null,

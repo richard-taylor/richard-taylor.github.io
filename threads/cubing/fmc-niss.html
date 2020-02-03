@@ -71,8 +71,9 @@ of moves <span class="alg">A</span> that solves it, then we know:
 <p>And why would we want to use the inverse scramble? Well, it might just be
 easier to work with using the techniques we know. For example,
 
-<pre><code class="bash"># SCRAMBLE="L2 D' B2 U2 F2 R2 D R2 U' B2 L U' B2 R' U2 R' D B U R"
-#
+<pre><code class="bash"># SCRAMBLE=\
+"L2 D' B2 U2 F2 R2 D R2 U' B2 L U' B2 R' U2 R' D B U R"
+
 # bin/block222 "${SCRAMBLE}"
 
 INFO: Looking for a solution with 1 turns.
@@ -93,8 +94,9 @@ Solutions:
 
 <p>The shortest 2x2x2 block on the normal scramble is 5 moves.
 
-<pre><code class="bash"># INVERSE="R' U' B' D' R U2 R B2 U L' B2 U R2 D' R2 F2 U2 B2 D L2"
-#
+<pre><code class="bash"># INVERSE=\
+"R' U' B' D' R U2 R B2 U L' B2 U R2 D' R2 F2 U2 B2 D L2"
+
 # bin/block222 "${INVERSE}"
 
 INFO: Looking for a solution with 1 turns.
@@ -276,8 +278,9 @@ open loop; it just does not work.
 <p>Let's see how this can work in practise. First a straight solution without
 using the inverse at all:
 
-<pre><code class="bash"># SCRAMBLE="F2 L' D2 R U2 R' U2 B2 F2 L D2 R2 U L2 F U2 L2 D2 L' D2 L'"
-#
+<pre><code class="bash"># SCRAMBLE=\
+"F2 L' D2 R U2 R' U2 B2 F2 L D2 R2 U L2 F U2 L2 D2 L' D2 L'"
+
 # bin/block222 "${SCRAMBLE}"
 
 INFO: Looking for a solution with 1 turns.
@@ -375,7 +378,11 @@ Solutions:
 <p>If we can finish off with some more moves <span class="alg">Q</span> then
 our final solution would be
 
-<pre><code class="math">D R2 D' R' D2   U' B2 U R B R2   Q   U L' U' B2 L</code></pre>
+<pre><code class="math">D R2 D' R' D2
+U' B2 U R B R2
+Q
+U L' U' B2 L
+</code></pre>
 
 <p>NISS is not a silver bullet. Sometimes it will help, sometimes it wont.
 In this case it seems to help a bit.
@@ -384,7 +391,8 @@ In this case it seems to help a bit.
 
 <p>Let's look at Harry Savage's annotated 17 move WR single, which used NISS.
 
-<pre><code class="bash">Scramble: R' U' F D' L2 B2 R2 B2 U F2 D U F2 R2 F D R2 B L D' B2 R' D' F2 R' U' F
+<pre><code class="bash">Scramble: R' U' F D' L2 B2 R2 B2 U F2 D U F2 R2 F D
+          R2 B L D' B2 R' D' F2 R' U' F
 
 R L' D' L    // eo [4/17]
 (R2 F')      // DR [2/17]
@@ -416,12 +424,17 @@ as indicated by the braces <span class="alg">()</span> around the moves.
 
 <p>The cube was scrambled and solved by the sequence:
 
-<pre><code class="math">F R2  S  R L' D' L U' R2 D' L2 D' L2 D F2 U2 F2 L2</code></pre>
+<pre><code class="math">F R2
+S
+R L' D' L U' R2 D' L2 D' L2 D F2 U2 F2 L2
+</code></pre>
 
 <p>So we can now drag the moves from before the scramble to the end to get the
 final solution:
 
-<pre><code class="math">R L' D' L U' R2 D' L2 D' L2 D F2 U2 F2 L2 F R2</code></pre>
+<pre><code class="math">R L' D' L U' R2 D' L2 D' L2 D F2 U2 F2 L2
+F R2
+</code></pre>
 
 <p>I think the braces <span class="alg">()</span> notation is a nice compact
 way of writing down a solution that incorporates NISS. It seems to have been
