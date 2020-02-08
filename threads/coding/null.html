@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Null Safe Boundaries</title>
+  <meta name="date.created" content="2020-02-07">
+  <meta name="description" content="A look at how null objects crop up in programs and how to design them out of your own code.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="oop.html">The Object of Perfection</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">Null Safe Boundaries</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2020-02-07</span>
+
+<h2>Introduction</h2>
+
+<p>When you use languages that have uninitialised or <em>null</em> objects,
+you have to be very careful not to use those objects like other objects.
+Sometimes the compiler or runtime will help you with this... mostly it wont
+and a program that has "worked fine until now" will just fail.
+
+<p>For example, this Java code wont compile because the compiler knows that
+you haven't even tried to initialise the name variable.
+
+<pre><code class="java">String name;
+boolean sir = name.startsWith("Sir");
+</code></pre>
+
+<p>But this will compile fine and will work unless getName returns null.
+
+<pre><code class="java">String name = getName();
+boolean sir = name.startsWith("Sir");
+</code></pre>
+
+<p>If that happens your program will throw a dreaded NullPointerException. And
+you lose a chunk of your self-respect. Lets assume that getName is part of some
+external library. You can complain that getName shouldn't ever return null, and
+we will come to that later, but there are plenty of APIs that are documented as
+returning null under some circumstances.
+
+<h2>Dealing with null</h2>
+
+<p>What you can do, when you get stung with a NullPointerException (NPE) is
+to code round it. Like this:
+
+<pre><code class="java">String name = getName();
+boolean sir = (name == null) ? false : name.startsWith("Sir");
+</code></pre>
+
+<p>Which puts a little sticking plaster on that bit of code. But what if there
+are other places where getName returns null that just haven't happened yet? Do
+you wait and see? Or go looking for them?
+
+<p>If you find yourself null-hunting like this then it is a sign that there are
+problems with your code design. So how can we deal with this better?
+
+<h2>Creating a null-safe boundary</h2>
+
+<p>Instead of dealing with nulls one at a time you can create boundaries that
+you know are safe and free from all nulls. One way is to use a class with a
+constructor.
+
+<pre><code class="java">public class Name {
+    private final String name;
+
+    public Name(String name) {
+        this.name = (name == null) ? "" : name;
+    }
+
+    public boolean isSir() {
+        return name.startsWith("Sir");
+    }
+}
+
+Name name = new Name(getName());
+boolean sir = name.isSir();
+</code></pre>
+
+<p>Now we can write code inside our Name class in the knowledge that there wont
+ever be any NPE. Because the constructor leaves any nulls at the door. And we
+can use the Name class without worrying that it might blow up somewhere one
+day.
+
+<p>But aren't we just hiding bugs inside a class here? Shouldn't the
+constructor throw an IllegalArgumentException or something? No. That would
+just be changing the exception type and wouldn't help us at all. It's not a
+bug for getName to return null, that's just how it was designed by someone
+else. It's only a bug for us to use the null object and trigger an NPE.
+
+<p>By building a safe boundary we are saying "In this context we treat an
+input of null as an empty Name."
+
+<p>And we can extend our boundary by defining other classes which explicitly
+define how they interpret a null input from other external sources.
+
+<p>In this way we leave all the nulls at the boundary and can write code with
+confidence that NPE will not strike.
+
+<h2>Avoiding null in the first place</h2>
+
+<p>Of course, it would be easier if getName just never returned null. So why
+does it? Lets look at some of the situations where you might be tempted to use
+null and see if there are alternatives.
+
+<h3>1. Something went wrong</h3>
+
+<p>A common reason for returning null is when the code fails to acquire the
+data requested for some reason. Maybe it comes from a database or a REST
+service that is temporarily unavailable. Internally it probably has code a bit
+like this:
+
+<pre><code class="java">public String getName() {
+    String result = null;
+    try {
+        result = resource.getName();
+    }
+    catch (ResourceThingNotAvailableToday ex) {
+        log.warn("Another failure: ", ex);
+    }
+    return result;
+}
+</code></pre>
+
+<p>The problem with this is that there probably is a "name", but we can't
+get it at this point in time. By returning null the code gives us an
+opportunity to misinterpret the result as "there is no name". It would be
+better to throw an exception; probably an application defined one, rather than
+the raw exception from the underlying resource:
+
+<pre><code class="java">public String getName() throws DatabaseError {
+    try {
+        return resource.getName();
+    }
+    catch (ResourceThingNotAvailableToday ex) {
+        throw new DatabaseError(ex);
+    }
+}
+</code></pre>
+
+<p>Sure, your code now has to catch this and deal with it. And you could just
+decide to treat the exception as "there is no name" still. But at least you
+have the full picture and can do something else if possible.
+
+<h3>2. There was no data</h3>
+
+<p>Another possibility is that there really is no name for this thing. Maybe
+the code looks like this:
+
+<pre><code class="java">public String getName() {
+
+    if (resource.hasName()) {
+        return resource.getName();
+    } else {
+        return null;
+    }
+}
+</code></pre>
+
+<p>Maybe, just maybe, it is really important to distinguish between a resource
+where no name has been set and a resource where the name has been explicitly
+set to "". Just as some people might care that my CV has no actual entry for
+the number of Nobel Prizes I have won, rather than assuming that it is zero.
+
+<p>There is almost always a sensible default value. In this case an empty
+string looks like a good candidate:
+
+<pre><code class="java">public static final String EMPTY_NAME = "";
+
+public String getName() {
+
+    if (resource.hasName()) {
+        return resource.getName();
+    } else {
+        return EMPTY_NAME;
+    }
+}
+</code></pre>
+
+<p>If you really need to distinguish between <em>not set</em> and all other
+values then consider using the <code>Optional</code> container introduced
+in Java 8. The syntax is horrible IMHO but it does a job.
+
+<p>And talking of containers; if you are returning a collection and have no
+data then returning an empty list is almost certainly better than returning
+null:
+
+<pre><code class="java">public List&lt;String&gt; getNames() {
+
+    if (resource.hasNames()) {
+        return resource.getNames();
+    } else {
+        return Collections.emptyList();
+    }
+}
+</code></pre>
+
+<p>By the way, if you do find yourself using <code>Optional</code> a lot, then
+ask yourself if your abstraction could be improved. One example I have seen
+was a bit like this:
+
+<pre><code class="java">public interface Computer {
+
+    MotherBoard getMotherBoard();
+
+    Optional&lt;SoundCard&gt; getSoundCard();
+    Optional&lt;HardDrive&gt; getHardDrive();
+    Optional&lt;GraphicsCard&gt; getGraphicsCard();
+    Optional&lt;OpticalDrive&gt; getOpticalDrive();
+}
+</code></pre>
+
+<p>And the rationale was that all those Optionals were needed
+because Computers always have a motherboard but may not have a soundcard etc.
+and returning null was bad and returning some default was bad.
+
+<p>This is putting a lot of burden on users of this interface to unpick what
+the Computer is made of. Perhaps instead of having a getter for each type of
+component the Computer <em>might</em> have, we provide a list of all the
+components it <em>does</em> have:
+
+<pre><code class="java">public interface Computer {
+
+    List&lt;Component&gt; getComponents();
+}
+</code></pre>
+
+<p>Which, incidentally, gives us a nice obvious default Computer... one that
+has an empty list of Components.
+
+<h3>3. Laziness</h3>
+
+<p>Have you ever seen Plain Old Java Objects (POJOs) like this?
+
+<pre><code class="java">public class Thing {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+</code></pre>
+
+<p>Normally these POJOs get constructed by a framework and "filled in" using
+the "set" methods. But what if the setter is never called? You have a null
+pointer inside your class. It's not much effort to add a constructor to
+initialise all the fields.
+
+<pre><code class="java">public class Thing {
+
+    private String name;
+
+    public Thing() {
+        name = "";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+</code></pre>
+
+<p>This gives us consistency with primitive types. Look at these two classes.
+With proper initialisation both are valid as soon as they are constructed,
+even though one contains only primitive types and the other classes. The user
+of the objects shouldn't have to know what is inside.
+
+<pre><code class="java">public class Complex {
+
+    private float real;
+    private float imaginary;
+
+    // setters omitted
+
+    public float getReal() {
+        return real;
+    }
+
+    public float getImaginary() {
+        return imaginary;
+    }
+}
+
+public class ComplexPair {
+
+    private Complex x;
+    private Complex y;
+
+    public ComplexPair() {
+        x = new Complex();
+        y = new Complex();
+    }
+
+    // setters omitted
+
+    public Complex getX() {
+        return x;
+    }
+
+    public Complex getY() {
+        return y;
+    }
+}
+</code></pre>
+
+<p>Constructing an object should always put it into a valid useable state.
+
+<h2>Summary</h2>
+
+<p>Null is bad. Avoid creating nulls in your own code by throwing exceptions
+rather than hiding errors, using default values where appropriate and designing
+objects that represent what <em>is</em> present rather than what <em>might
+be</em> present.
+
+<p>Externally generated nulls can be handled by creating boundaries
+that leave the nulls outside. This liberates you to write code knowing
+that you are in a null free space.
+
+<div class="nav"><span class="previous_article"><a href="oop.html">The Object of Perfection</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>

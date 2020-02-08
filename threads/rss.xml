@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>Null Safe Boundaries</title>
+<link>https://richard-taylor.github.io/threads/coding/null.html</link>
+<description>A look at how null objects crop up in programs and how to design them out of your own code.</description>
+<pubDate>Fri, 07 Feb 2020 19:15:00 GMT</pubDate>
+<category>Professional Coding Techniques</category>
+</item>
+<item>
 <title>RSS Is Alive And Well</title>
 <link>https://richard-taylor.github.io/threads/threader/rss.html</link>
 <description>A look at why I added RSS support to the threader, why I think RSS is still important, and why you should too.</description>
@@ -58,12 +65,6 @@
 <title>Inverse Scramble and NISS</title>
 <link>https://richard-taylor.github.io/threads/cubing/fmc-niss.html</link>
 <pubDate>Sat, 23 Feb 2019 19:15:00 GMT</pubDate>
-<category>Cubing Tools And Tricks</category>
-</item>
-<item>
-<title>FMC and Block Building</title>
-<link>https://richard-taylor.github.io/threads/cubing/fmc-blocks.html</link>
-<pubDate>Thu, 14 Feb 2019 19:15:00 GMT</pubDate>
 <category>Cubing Tools And Tricks</category>
 </item>
 </channel>
