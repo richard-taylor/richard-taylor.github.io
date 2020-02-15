@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Test Driven Refinement</title>
+  <meta name="date.created" content="2020-02-12">
+  <meta name="description" content="After knocking about ideas for the basic API, the next thing to do is solidify the design by adding more tests to prove it out.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="basic-api.html">Basic API</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">Test Driven Refinement</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2020-02-12</span>
+
+<p>We knocked ideas around to get our basic API. Now's the time to solidify
+what we have by writing some more tests.
+
+<p>If the structure of the API or the underlying components isn't quite right
+then those issues should surface as we add unit tests. Then we can add some
+higher level tests on top of that stronger foundation.
+
+<h2>Translator Unit Tests</h2>
+
+<p>There is not a great deal to test in the translator.py module. But one thing
+did come up. Sorting the JSON keys makes the output more consistent and thus
+easier to test.
+
+<pre><code class="python">json.dumps(values, sort_keys=True)
+</code></pre>
+
+<p>And in case you didn't know; there is an assertRaises method in unittest:
+
+<pre><code class="python">self.assertRaises(TranslationError,
+                  self.translate.to_item, '{blah}')
+</code></pre>
+
+<p>Which makes testing for exceptions easier. Note that the method under test
+<em>to_item</em> and its parameter <em>'{blah}'</em> are two separate
+parameters to <em>assertRaises</em> not one. The two lines above are equivalent
+to:
+
+<pre><code class="python">try:
+    self.translate.to_item('{blah}')
+    self.fail("expected a TranslationError to be raised")
+except TranslationError:
+    pass
+</code></pre>
+
+<p>but a lot shorter.
+
+<h2>Storage Unit Tests</h2>
+
+<p>There is also not a lot to test in the storage.py module. But I quickly
+noticed that I had been lazy and returned <em>None</em> from the find_item
+method when there was no item found. This is poor design so I changed it to
+raise a new ItemNotFound exception instead.
+
+<p>I expect this change to cause a failure elsewhere in code that assumes
+<em>None</em> means not found. So lets try and provoke that with a test.
+
+<h2>API Unit Tests</h2>
+
+<p>Sure enough the first few tests for the api.py module fail when we try
+to call get_item for a non-existent identifier.
+
+<p>And it seems clear that we need to move the definitions of the API
+exceptions out of the lower-level modules into a error.py module so that
+api.py does not have to catch the exceptions from storage.py just to rethrow
+them as a more generic type.
+
+<p>For example, in storage.py we have:
+
+<pre><code class="python">def find_item(self, id):
+    try:
+        return self.items[id]
+    except KeyError:
+        raise ItemNotFound()
+</code></pre>
+
+<p>Where <em>ItemNotFound</em> is an exception from error.py which is also
+the expected result from API.get_item when the item does not exist. So all
+that method needs is:
+
+<pre><code class="python">return storage.find_item(id)
+</code></pre>
+
+<p>which will raise the <em>ItemNotFound</em> when expected.
+
+<p>That gets us to
+<a href="https://github.com/richard-taylor/thelca/tree/7c7c1215497f5bf1ceea20fa22acbe86fa09a961">this
+version of the project</a>. We have unit tests for all the functionality, but
+no formal black-box tests for the whole API.
+
+<h2>Black Box API Tests</h2>
+
+<p>To test the whole API we need a server running, so the tests have to be
+separate from the unit tests. Also it is a good idea to not use the code that
+we are testing in black-box tests.
+
+<p>I created a separate runner for these tests:
+
+<pre><code class="bash">bin/api_test_thelca.sh
+</code></pre>
+
+<p>which runs all tests fitting the pattern <em>api_tests_*.py</em>
+
+<p>Note that the first new test <em>api_tests_item.py</em> does not import
+any modules from <em>thelca</em> but instead uses the popular python
+'requests' module that you will probably need to install.
+
+<pre><code class="python">import requests
+import unittest
+
+class TestBlackBoxItemAPI(unittest.TestCase):
+
+    def setUp(self):
+        self.url = 'http://localhost:2207/v1/items'
+
+    def test_get_fails_for_non_item(self):
+        response = requests.get(self.url + '/no-such-id')
+        self.assertEqual(404, response.status_code)
+</code></pre>
+
+<p>As you can see this makes it very easy to write black-box tests for the
+API using requests and the unittest framework to make assertions.
+
+<p>Once you step back from the code and write black-box tests then you often
+find bugs that you completely overlooked when you were close to the code. For
+example, I discovered that the API was returning <em>SERVICE_UNAVAILABLE</em>
+when I passed in certain 'bad' JSON strings, instead of <em>BAD_REQUEST</em>.
+That's because when I wrote the code I thought it could only fail if there
+was an internal problem... but then put some checking into that method which
+meant it could fail if the request was bad.
+
+<p>Another thing I discovered was that passing in additional fields just
+propagated them through instead of stripping them out. This test:
+
+<pre><code class="python">def test_post_ignores_extra_fields(self):
+    response = requests.post(self.url, data = '''
+    {
+        "properties": { "type": "BUG", "status": "OPEN" },
+        "secret": "you aint seen me, right?"
+    }
+    ''')
+    self.assertEqual(200, response.status_code)
+
+    json = response.json()
+    self.assertNotIn('secret', json)
+</code></pre>
+
+<p>failed until I fixed the code and 'secret' vanished.
+
+<h2>Foray Into TDD</h2>
+
+<p>Having written the tests above I knew I needed to implement the <em>PUT</em>
+method next, so that Items can be updated once created. Since I now have some
+nice black-box tests for <em>GET</em> and <em>POST</em> it seemed natural to
+write the tests for <em>PUT</em> before writing the code - Test Driven
+Development. So this is what I did:
+<ol>
+<li>Wrote the API tests for PUT in the same style as POST
+<li>Checked that they failed
+<li>Implemented the code for PUT
+<li>Checked that the tests now passed
+<li>Looked at the modules with new code
+<li>Added unit tests for the new methods and cases I had added
+</ol>
+
+<p>And after that we have 27 unit tests and 17 API tests and the
+<a href="https://github.com/richard-taylor/thelca/tree/edd4ab06bdb7cc9d066c97ba23318f0672fadf8c">project
+is in this state</a>. Note that I added some notes to the README on how to
+run the API tests.
+
+<h2>Still Unfinished Business</h2>
+
+<p>Now we have implemented the main API methods for Items and written
+tests to show that the implementation is correct. It is tempting to crack
+on and implement Links as well. But before I do that I want to tackle the
+strong logging that I promised.
+
+<p>So the next step is to log all the changes made by the API in such a way
+that every change can be audited; and the state of all the stored Items can
+be restored by replaying the events recorded in the log.
+
+<div class="nav"><span class="previous_article"><a href="basic-api.html">Basic API</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
