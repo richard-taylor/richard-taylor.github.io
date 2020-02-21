@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>Users, Tokens and Event Logging</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/event-logging.html</link>
+<description>To log all events of who did what, we first have to sort out who is who; by nailing down our user management.</description>
+<pubDate>Tue, 18 Feb 2020 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
 <title>Test Driven Refinement</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/more-tests.html</link>
 <description>After knocking about ideas for the basic API, the next thing to do is solidify the design by adding more tests to prove it out.</description>
@@ -60,12 +67,6 @@
 <title>The Object of Perfection</title>
 <link>https://richard-taylor.github.io/threads/coding/oop.html</link>
 <pubDate>Tue, 25 Jun 2019 19:15:00 GMT</pubDate>
-<category>Professional Coding Techniques</category>
-</item>
-<item>
-<title>A Rose By Any Other Name</title>
-<link>https://richard-taylor.github.io/threads/coding/naming.html</link>
-<pubDate>Sat, 16 Mar 2019 19:15:00 GMT</pubDate>
 <category>Professional Coding Techniques</category>
 </item>
 </channel>

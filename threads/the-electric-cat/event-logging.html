@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Users, Tokens and Event Logging</title>
+  <meta name="date.created" content="2020-02-18">
+  <meta name="description" content="To log all events of who did what, we first have to sort out who is who; by nailing down our user management.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="more-tests.html">Test Driven Refinement</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">Users, Tokens and Event Logging</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2020-02-18</span>
+
+<p>The reason that I want to tackle logging now, while there is not much code,
+is that it can take an awful lot of refactoring to change something that sits in
+every single API method. So I put in this <em>requesting_user</em> parameter
+everywhere as a reminder... and now it's time to sort out what that means.
+
+<p>One thing that has become clear in the last few years is that the place for
+managing user data is <em>not in every single service</em>. If this concept is
+new to you then there is a good
+<a href="https://connect2id.com/learn/openid-connect">Introduction to
+OpenID Connect</a> which is very readable.
+
+<p>So am I going to implement an integration to an OAuth 2.0 provider before
+I do anything else? No. I just need to be aware of the concepts and put in
+the appropriate placeholders.
+
+<h2>Tokens not Users</h2>
+
+<p>The workflow for a client using our API with authentication will be:
+<ol>
+<li>Client logs into a third-party service to get a <em>token</em>.
+<li>Client passes the token to the API as part of every request.
+<li>API extracts the user id and permissions from the token.
+<li>API either grants or refuses access to the resource requested.
+</ol>
+
+<p>The way that the client passes the token to the API is via a HTTP header:
+
+<pre><code class="bash">Authorization: Bearer wKICJleHAiOiAxMzExMjgxOT
+</code></pre>
+
+<p>The token is Base64 encoded (and usually a bit longer than I have shown).
+At this stage it doesn't matter where the token comes from. Our test code can
+just make one up and pass it to the API.
+
+<pre><code class="python">def invent_a_jwt():
+    return {'Authorization': 'Bearer abcd'}
+
+class TestBlackBoxItemAPI(unittest.TestCase):
+
+    def setUp(self):
+        self.url = 'http://localhost:2207/v1/items'
+
+    def test_post_succeeds_for_empty_json(self):
+
+        response = requests.post(self.url,
+                                 data = '{}',
+                                 headers = invent_a_jwt())
+
+        self.assertEqual(200, response.status_code)
+</code></pre>
+
+<p>And our HTTP Server can extract the token from the header and pass it to
+the API instead of the made-up User that we had before. Which means we change
+the API methods from:
+
+<pre><code class="python">def get_item(self, id, requesting_user)
+
+def create_item(self, dictionary, requesting_user)
+
+def update_item(self, id, item, requesting_user)
+</code></pre>
+
+<p>to
+
+<pre><code class="python">def get_item(self, id, token)
+
+def create_item(self, dictionary, token)
+
+def update_item(self, id, item, token)
+</code></pre>
+
+<p>But what do we do with the token? Given that our test code just made one
+up! Well, we delegate to an Authority object:
+
+<pre><code class="python">from thelca.auth import Authority
+
+authority = Authority()
+</code></pre>
+
+<p>This object doesn't have to <em>do</em> any authorisation yet, it just has
+to have the same interface as the object that will later when we implement it
+properly.
+
+<p>Let's look at the updated get_item method:
+
+<pre><code class="python">def get_item(self, id, token):
+    item = storage.find_item(id)
+    user = authority.check_read_item(token, item)
+
+    logging.item_read(item, user)
+    return item
+</code></pre>
+
+<p>We find the item first, then check whether we have the authority to access
+it. That's because the check might depend on some property of the item. If the
+check fails then the authority object raises a <em>NotAuthorisedError</em>.
+However if it succeeds then the authority object returns some kind of
+identifier for the user which we can use to log the event before returning
+the item.
+
+<p>So we do not need any representation of a User in the API at all. The token
+represents the user and the authority object extracts the user identifier from
+the token for us.
+
+<p>For the time being all we need the authority object to do is:
+<ul>
+<li>Model the authorisation interface
+<li>Raise a NotAuthorisedError if there is no token
+<li>Raise a NotAuthorisedError for a known test token
+<li>Return a user identifier that is derived from the token
+</ul>
+
+<p>And this does all of that for what we need in get_item:
+
+<pre><code class="python">def check_read_item(self, token, item):
+    if token is None or token == 'BAAD':
+        raise NotAuthorisedError()
+    else:
+        return "a-test-only-id-" + token
+</code></pre>
+
+<p>Now we have all the pieces we need to write the rest of the API without
+having to implement the actual integration to an OAuth 2.0 provider. We can
+do that integration later when we need it; without having to change any of
+the API code.
+
+<h2>Event Logging</h2>
+
+<p>Since we have nailed down how to know who is accessing the API, we can
+think about how to log what they do.
+
+<p>You can see at
+<a href="https://github.com/richard-taylor/thelca/tree/f5286d932b8a6663119c040d32d8ec7f53b516ae">this
+version of the project</a> that I have
+added a logging.py module. Under the hood this uses the standard python
+'logging' module to write lines to a file. That is not important right now;
+what matters is that our API passes all the relevant information to the
+logging.py module so that we can send it where it needs to go.
+
+<p>Take a look at the api.py module. You can see that every method logs the
+data it is about to return; and who it is returning it to:
+
+<pre><code class="python">def get_item(self, id, token):
+    ...
+    logging.item_read(item, user)
+    return item
+
+def create_item(self, dictionary, token):
+    ...
+    logging.item_created(item, user)
+    return item
+
+def update_item(self, id, item, token):
+    ...
+    logging.item_updated(item, user)
+    return item
+</code></pre>
+
+<p>In each case the 'user' is the identifier extracted from the token by our
+authority object as described above. And the 'item' is the full Item object.
+
+<p>At this version I am writing out the full object for item_created and
+item_updated, since these operations change the Item object; and I am writing
+out the object identifier for item_read since it does not change the Item
+object.
+
+<p>This stream has enough information to reconstruct the data we have stored
+in memory for any point in time. It is probably too verbose, but I want to get
+it working first before worrying about efficiency.
+
+<p>Here is an example of what the thelca-events.log file contains after a
+number of requests have been processed. It is one JSON object per line but
+I have formatted it to make it more readable:
+
+<pre><code class="bash">{"time": "2020-02-18T16:37:09.654949+00:00",
+ "type": "Item created",
+ "user": "a-test-only-id-abcd",
+ "value": {"created_at": "2020-02-18T16:37:09.654917+00:00",
+           "created_by": "a-test-only-id-abcd",
+           "id": "5f73f540-c125-435d-8a5e-6fea05672b7a",
+           "properties": null}}
+
+{"time": "2020-02-18T16:37:09.658768+00:00",
+ "type": "Item updated",
+ "user": "a-test-only-id-abcd",
+ "value": {"created_at": "2020-02-18T16:37:09.654917+00:00",
+           "created_by": "a-test-only-id-abcd",
+           "id": "5f73f540-c125-435d-8a5e-6fea05672b7a",
+           "properties": {"type": "STORY"}}}
+
+{"time": "2020-02-18T16:37:09.662897+00:00",
+ "type": "Item read",
+ "user": "a-test-only-id-abcd",
+ "value": "5f73f540-c125-435d-8a5e-6fea05672b7a"}
+</code></pre>
+
+<p>From here it is
+<a href="https://github.com/richard-taylor/thelca/commit/4c9889c63a40a9209880d63ff16ffc8a953eabc7">not
+much work</a> to optionally read the event log when the server starts up and
+restore the Items that were previously constructed.
+
+<h2>Next</h2>
+
+<p>The API is now very solid for Item objects. We have POST to create, GET to
+read and PUT to update. We want to keep objects for audit purposes, so we will
+not be implementing DELETE (more on that later).
+
+<p>There are placeholders for authentication and authorisation; and a mechanism
+to log all user actions in a way that also enables all the stored Items to
+be restored by replaying the events recorded in the log.
+
+<p>So next we can go and implement Link objects.
+
+<div class="nav"><span class="previous_article"><a href="more-tests.html">Test Driven Refinement</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>
