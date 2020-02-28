@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>Links and Refactoring the Models</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/data-models-2.html</link>
+<description>Adding a /v1/links endpoint highlights a few areas where the API and DataModels modules need refactoring.</description>
+<pubDate>Fri, 28 Feb 2020 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
 <title>Users, Tokens and Event Logging</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/event-logging.html</link>
 <description>To log all events of who did what, we first have to sort out who is who; by nailing down our user management.</description>
@@ -62,12 +69,6 @@
 <link>https://richard-taylor.github.io/threads/the-electric-cat/intro.html</link>
 <pubDate>Wed, 09 Oct 2019 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
-</item>
-<item>
-<title>The Object of Perfection</title>
-<link>https://richard-taylor.github.io/threads/coding/oop.html</link>
-<pubDate>Tue, 25 Jun 2019 19:15:00 GMT</pubDate>
-<category>Professional Coding Techniques</category>
 </item>
 </channel>
 </rss>
