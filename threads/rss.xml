@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>Simple Searches</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/simple-search.html</link>
+<description>Adding the most basic search functionality to The Electric Cat so that we can find what we already made.</description>
+<pubDate>Tue, 10 Mar 2020 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
 <title>Links and Refactoring the Models</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/data-models-2.html</link>
 <description>Adding a /v1/links endpoint highlights a few areas where the API and DataModels modules need refactoring.</description>
@@ -62,12 +69,6 @@
 <title>First Steps</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/first-steps.html</link>
 <pubDate>Mon, 21 Oct 2019 19:15:00 GMT</pubDate>
-<category>The Electric Cat</category>
-</item>
-<item>
-<title>Introduction to The Electric Cat</title>
-<link>https://richard-taylor.github.io/threads/the-electric-cat/intro.html</link>
-<pubDate>Wed, 09 Oct 2019 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
 </item>
 </channel>
