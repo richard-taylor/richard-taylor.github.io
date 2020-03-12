@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>HTTPS and Observability</title>
+<link>https://richard-taylor.github.io/threads/the-electric-cat/https-observability.html</link>
+<description>Why the API has to be HTTPS and some other basics for service observability.</description>
+<pubDate>Thu, 12 Mar 2020 19:15:00 GMT</pubDate>
+<category>The Electric Cat</category>
+</item>
+<item>
 <title>Simple Searches</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/simple-search.html</link>
 <description>Adding the most basic search functionality to The Electric Cat so that we can find what we already made.</description>
@@ -63,12 +70,6 @@
 <title>Bare Bones</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/bare-bones.html</link>
 <pubDate>Tue, 05 Nov 2019 19:15:00 GMT</pubDate>
-<category>The Electric Cat</category>
-</item>
-<item>
-<title>First Steps</title>
-<link>https://richard-taylor.github.io/threads/the-electric-cat/first-steps.html</link>
-<pubDate>Mon, 21 Oct 2019 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
 </item>
 </channel>
