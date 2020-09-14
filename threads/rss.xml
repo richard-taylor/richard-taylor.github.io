@@ -6,6 +6,12 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>Transition from Engineer to Manager</title>
+<link>https://richard-taylor.github.io/threads/r_c_a_d/engineer-to-manager.html</link>
+<pubDate>Thu, 04 Jun 2020 19:15:00 GMT</pubDate>
+<category>R blank C blank A blank D</category>
+</item>
+<item>
 <title>HTTPS and Observability</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/https-observability.html</link>
 <description>Why the API has to be HTTPS and some other basics for service observability.</description>
@@ -64,12 +70,6 @@
 <title>Data Models - part 1</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/data-models.html</link>
 <pubDate>Tue, 12 Nov 2019 19:15:00 GMT</pubDate>
-<category>The Electric Cat</category>
-</item>
-<item>
-<title>Bare Bones</title>
-<link>https://richard-taylor.github.io/threads/the-electric-cat/bare-bones.html</link>
-<pubDate>Tue, 05 Nov 2019 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
 </item>
 </channel>

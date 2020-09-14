@@ -23,7 +23,8 @@ div.nav {
     text-align: center;
 }
 dl.index {
-    border: 1px solid #333333;
+    background: #ffcccc;
+    border: 1px solid #ff9999;
     border-radius: 1em;
     width: 100%;
 }
