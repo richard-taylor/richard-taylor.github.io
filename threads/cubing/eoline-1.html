@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EOLine for Intermediates - Part 1</title>
+  <meta name="date.created" content="2022-01-22">
+  <meta name="description" content="The first part of a miniseries on the EOLine step of the ZZ method, for intermediate level solvers who know the basics and want to move to the next level.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="fmc-niss.html">Inverse Scramble and NISS</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">EOLine for Intermediates - Part 1</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2022-01-22</span>
+
+<p>I use the ZZ method for 3x3 solving. Originally I learned this using <a
+href="http://cube.rider.biz/zz.php">Conrad Rider's Tutorials</a> and <a
+href="https://www.youtube.com/watch?v=Q9f-uHyHeQs">Phil Yu's YouTube Videos</a>
+which are both excellent. 
+
+<p>This article is for people who know how to use ZZ, but cannot yet plan the
+whole EOLine step in the 15 seconds allowed for inspection at competitions.  If
+you've ever been at a competition and heard the judge say "12 seconds" when you
+still haven't a clue how you are going to start your solve... then I feel your
+pain.
+
+<p>Most people start using ZZ by solving edge orientation first, then placing
+the two line pieces as a second step.  This works fine, as long as you don't
+lose track of the line pieces, or place them in an awkward position. It also
+feels like "beginner mode" since we know there are people who can do the whole
+EOLine in one step. We also know that on average there is a 6 move optimal
+solution... so how hard can it be?
+
+<h2>Inspired By Optimal</h2>
+
+<p>My first attempt to improve my EOLine was to do what the tutorials suggest
+and think about where the line pieces will end up when solving orientation.
+This helped a bit, but I still found it really hard and often went wrong. So
+then I started looking at some optimal solutions to see if there were any
+tricks I was missing.
+
+<p>Several tools will show you an optimal EOLine for a particular scramble. The
+problem is that these optimal solutions are often just baffling. They look like
+you would never be able spot them in 15 seconds. For example this scramble:
+
+<pre><code class="math">R U L R U L F2 U B' L U2 F D
+</code></pre>
+
+Has an optimal 7 move EOLine:
+
+<pre><code class="math">L2 U2 B L' U' D B
+</code></pre>
+
+Which obviously is problematic because most of the action is happening out of
+sight with those <span class="alg">B</span> turns. That brings me to my first
+tip: if you normally solve with white on the bottom and green at the front,
+then it is definitely worth learning to solve with either green at the front or
+blue at the front.  If you do so then you can switch the <span
+class="alg">L</span> turns for <span class="alg">R</span> turns and switch the
+<span class="alg">B</span> turns for <span class="alg">F</span> turns to get
+this EOLine from the opposite side:
+
+<pre><code class="math">y2 R2 U2 F R' U' D F
+</code></pre>
+
+<span class="alg">y2</span> means rotate the whole cube 180 degrees (back goes
+to front).
+
+<p>This looks a bit better. But that <span class="alg">R2 U2 F</span> at the
+start looks weird because it moves the green-white line piece onto the blue
+face, which is very counter-intuitive.
+
+<p>But don't worry. This is only one of the optimal solutions! I wrote a tool to
+show all the optimal solutions for a given scramble, and the results are often
+quite interesting. Let's look at our scramble again:
+
+<pre><code class="bash"># SCRAMBLE="R U L R U L F2 U B' L U2 F D"
+
+# bin/eoline "${SCRAMBLE}"
+
+INFO: Looking for a solution with 1 turns.
+INFO: Looking for a solution with 2 turns.
+INFO: Looking for a solution with 3 turns.
+INFO: Looking for a solution with 4 turns.
+INFO: Looking for a solution with 5 turns.
+INFO: Looking for a solution with 6 turns.
+INFO: Looking for a solution with 7 turns.
+INFO: Solving time: 14.827 seconds.
+Solutions:
+    D' F' U2 L' B U' F2
+    D F' U2 L' B U' F2
+    R2 F' U' L R' D B'
+    R2 F' L U' R' D B'
+    R2 F U' R' D' L2 B'
+    R2 F U' L R' D' B'
+    R2 F L U' R' D' B'
+    R2 U' R' D' B' U2 F
+    R2 U' R' D B' U2 F
+    R B' D' F' B' L D
+    R B' D' F' B L D
+    R B' D F B' R' D'
+    R B' D F B R' D'
+    L2 U2 B L' U' D B
+</code></pre>
+
+(Note that this solves for orientation with respect to the z-axis and places
+the line on the bottom. So assuming you scramble with white at the bottom and
+green or blue at the front, then the line will be green-white, white centre,
+white-blue)
+
+<p>There is our previous solution at the end, but it is only 1 out of 14
+solutions with 7 turns. Let's take a look at the first one <span class="alg">D'
+F' U2 L' B U' F2</span>.
+
+<p>Well, the first move <span class="alg">D'</span> makes sense, because it
+places a bad edge on the front and another on the back. This is a 6 bad-edge
+case so that gives us 3 bad edges on the front and we know that <span
+class="alg">F</span> or <span class="alg">F'</span> now will leave us with 4
+bad edges. In this example <span class="alg">F'</span> feels good because it
+places the two line pieces on opposite sides of the cube.
+
+<p>So those first two moves look like something I should be able to figure out.
+What's next? There are now 4 bad edges left and 2 of them are placed on the
+back face - clearly <span class="alg">U2 L'</span> places the other two edges
+onto the back face. Notice how the blue-white edge is on the left, so we want
+to do a <span class="alg">B</span> to fix those 4 edges <em>and</em> place the
+line piece in its final place.
+
+<p>Now we have fixed all the edges and placed a line piece, we just have to
+place the final line piece, which is right there on the top, so clearly <span
+class="alg">U' F2</span> does the job.
+
+<p>So this optimal solution definitely looks like something you might be able
+to spot in 15 seconds. Also, even if you only managed to spot the first 5
+moves, which solve orientation and place one of the line pieces, then the final
+2 moves are trivial to add during execution.
+
+<p>I think this shows that there are definitely lessons to be learned from
+studying the full range of optimal solutions.
+
+<h2>Explore The Options</h2>
+
+<p>We know that the most likely number of bad edges in a scramble is 6. So if
+we want to investigate the other cases then we might have to try a lot of
+scrambles.  Instead I added a <code>-b</code> option to my EOLine solver to
+specify how many bad edges I want. It then generates a scramble with that many
+bad edges and all the optimal solutions:
+
+<pre><code class="bash"># bin/eoline -b 2
+
+INFO: Looking for a solution with 1 turns.
+INFO: Looking for a solution with 2 turns.
+INFO: Looking for a solution with 3 turns.
+INFO: Looking for a solution with 4 turns.
+INFO: Looking for a solution with 5 turns.
+INFO: Looking for a solution with 6 turns.
+Scramble:
+    D' L' F D' F' D
+INFO: Solving time: 1.12074 seconds.
+Solutions:
+    D' F D F' L D
+    D2 L' U' F D2 F
+    D F D' F R' D'
+    D L D B R2 B'
+    D L D F D2 F'
+    L' U' D2 F D2 F
+    L D' F D F' D
+    L D' F D F D
+</code></pre>
+
+Notice that the scramble is just the EOLine part; if you want the cube to "look
+more scrambled" then just spam random combinations of <span class="alg">R U
+L</span> turns first. Or scramble the cube, solve EOLine yourself, then apply
+the EOLine scramble.
+
+<p>This tool gives you a way to try out lots of 6 bad-edge cases one after the
+other, or a set of 2 bad-edges cases, or 12 ... whatever you want. If you ask
+for an odd number then it will try forever to find one, just to teach you a
+lesson :-)
+
+<h2>Summary</h2>
+
+<p>Improving at EOLine can be really tough, as many of the tutorials point you
+in the right direction but then leave you to find your own way. That's
+inevitable because there is no single best way to do it: for proof you just
+have to look at how many different optimal solutions the typical scramble has.
+
+<p>To find your personal way it helps to have lots of examples; these tools
+give you as many as you will ever need. With practice you <em>will</em> be
+able to find optimal, or near optimal, EOLine solutions at least some of the
+time.
+
+<p>In the next article I will share some of the tricks I learned to cover the
+gap between when you can <em>nearly</em> solve EOLine in 15 seconds and when
+you can actually do it.
+
+<div class="nav"><span class="previous_article"><a href="fmc-niss.html">Inverse Scramble and NISS</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>

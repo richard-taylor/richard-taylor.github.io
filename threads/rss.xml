@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>EOLine for Intermediates - Part 1</title>
+<link>https://richard-taylor.github.io/threads/cubing/eoline-1.html</link>
+<description>The first part of a miniseries on the EOLine step of the ZZ method, for intermediate level solvers who know the basics and want to move to the next level.</description>
+<pubDate>Sat, 22 Jan 2022 19:15:00 GMT</pubDate>
+<category>Cubing Tools And Tricks</category>
+</item>
+<item>
 <title>Transition from Engineer to Manager</title>
 <link>https://richard-taylor.github.io/threads/r_c_a_d/engineer-to-manager.html</link>
 <pubDate>Thu, 04 Jun 2020 19:15:00 GMT</pubDate>
@@ -64,12 +71,6 @@
 <title>Basic API</title>
 <link>https://richard-taylor.github.io/threads/the-electric-cat/basic-api.html</link>
 <pubDate>Fri, 20 Dec 2019 19:15:00 GMT</pubDate>
-<category>The Electric Cat</category>
-</item>
-<item>
-<title>Data Models - part 1</title>
-<link>https://richard-taylor.github.io/threads/the-electric-cat/data-models.html</link>
-<pubDate>Tue, 12 Nov 2019 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
 </item>
 </channel>
