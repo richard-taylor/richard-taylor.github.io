@@ -6,20 +6,12 @@ a:hover {
     color: #ffffff;
 }
 body {
-    color: #8888ee;
+    color: #222266;
     font-family: Verdana, sans-serif;
     font-size: 18pt;
     margin: 0 auto;
     max-width: 40em;
     padding: 0 1em;
-}
-div.edits {
-    background: #ffffff;
-    border-radius: 1em;
-    color: #808080;
-    font-size: 75%;
-    margin: 0.5em 0;
-    padding: 0.5em;
 }
 div.nav {
     background: #444488;
@@ -36,13 +28,13 @@ dl.index {
     width: 100%;
 }
 dl.index dt {
-    color: #606060;
+    color: #303030;
     padding: 0.25em 0.75em;
 }
 figcaption {
     background: #111133;
     border-radius: 0.75em;
-    color: #333399;
+    color: #aaaaff;
     font-size: 75%;
     padding: 0.75em;
     text-align: center;
@@ -60,7 +52,7 @@ figure.small {
     width: 50%;
 }
 html {
-    background: #333399;
+    background: #7777dd;
 }
 img {
     width: 100%;
