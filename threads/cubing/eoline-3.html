@@ -82,6 +82,7 @@ Z    Better or same
 <pre>
 Z    Better
 ===========
+0    0
 2    0.0010
 4    0.0422
 6    0.2741
@@ -97,19 +98,19 @@ awkward. Also on the positive side, if there are 10 or more "bad" edges on the
 first axis then you are almost certain to do better on the second axis.
 
 <p>Is it only slightly better though? Swapping a 12 for a 10 isn't a particularly
-fantastic trade. Here are the chances of doing better by 4 and 6 edges, rather
-than just the minimum of 2.
+fantastic trade. Here are the chances of doing better by 4 and 6 edges, as well
+as just the minimum of 2. (actually better by 2 or more, 4 or more, 6 or more)
 
 <pre>
-Z    Better by 4    Better by 6
-===============================
-0    0              0
-2    0              0
-4    0.0007         0
-6    0.0327         0.0005
-8    0.2288         0.0231
-10   0.6352         0.1845
-12   0.9327         0.5931
+Z    Better 2+    Better 4+    Better 6+
+========================================
+0    0            0            0
+2    0.0010       0            0
+4    0.0422       0.0007       0
+6    0.2741       0.0327       0.0005
+8    0.6795       0.2288       0.0231
+10   0.9466       0.6352       0.1845
+12   0.9980       0.9327       0.5931
 </pre>
 
 <p>So it is good news. There is a 59.3% chance that the second axis will have
