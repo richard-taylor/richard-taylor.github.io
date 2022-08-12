@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Advanced EOLine - Part 1</title>
+  <meta name="date.created" content="2022-08-12">
+  <meta name="description" content="The third part of a miniseries on the EOLine step of the ZZ method, this time moving on to more advanced techniques.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="eoline-2.html">EOLine for Intermediates - Part 2</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">Advanced EOLine - Part 1</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2022-08-12</span>
+
+<p>In the previous article I shared some tools for helping ZZ solvers move
+towards optimal EOLine solutions. Once you have mastered that, what else is
+there to learn?
+
+<h2>Green-Blue and Red-Orange Neutrality</h2>
+
+<p>Unlike CFOP, where many solvers learn to make the cross on any of the
+6 faces (colour neutrality), the prospect of making a line on any
+face and orienting all 12 edges seems very, very difficult.
+
+<p>But it seems intuitive that if the line on white looks tricky with green or
+blue on front, then it <em>might</em> be easier to make a line at 90 degrees
+to that instead (line on white but edges oriented with red or orange on front).
+
+<p>So let's look at some numbers. I did a billion random scrambles and counted
+the "bad" edges on the z-axis (green-blue) and also on the x-axis (red-orange).
+I found that the proportion of scrambles where the x-axis count was less than
+the z-axis count was 0.329 and where it was less or equal was 0.671.
+
+<p>Just in terms of the number of bad edges then, you have a 32.9% chance of
+doing better by switching from Z to X, and a 67.1% chance of not doing worse.
+
+<p>Since you can do "better" if you are able to solve on <em>either</em>
+green-blue or red-orange 32.9% of the time, that means the chance of doing
+better on at least one solve in a round of 5 is 86.4%, which is huge. So it
+definitely seems worth the trouble. Obviously the number of bad edges alone
+doesn't paint the whole picture, but quantifying the "niceness" of the line
+edges will have to wait for further analysis. 
+
+<p>If we are convinced that there is value in learning to solve EOLine on two
+different axes, let's look at some more detail. On those billion scrambles
+these are the proportions of "bad" edges on the x-axis for each of the possible
+counts on the z-axis.
+
+<pre>
+Z edges  X0      X2      X4      X6      X8      X10     X12
+===============================================================
+0        0.0019  0.0650  0.3389  0.4531  0.1414  0.0000  0.0000
+2        0.0010  0.0524  0.3115  0.4508  0.1714  0.0129  0.0000
+4        0.0007  0.0415  0.2782  0.4507  0.2057  0.0229  0.0003
+6        0.0005  0.0322  0.2415  0.4517  0.2414  0.0322  0.0005
+8        0.0003  0.0229  0.2057  0.4507  0.2783  0.0415  0.0007
+10       0.0000  0.0129  0.1716  0.4507  0.3114  0.0525  0.0010
+12       0.0000  0.0000  0.1405  0.4527  0.3396  0.0652  0.0020
+</pre>
+
+<p>Clearly you are unlikely to get fewer than 4 bad edges on red-orange if
+there are 12 on blue-green, but also you are unlikely to get more than 8. Here
+are the chances of doing the same or better given a particular "bad" edge count
+on one axis.
+
+<pre>
+Z    Better or same
+===================
+0    0.0019
+2    0.0534
+4    0.3204
+6    0.7259
+8    0.9578
+10   0.9990
+12   1
+</pre>
+
+<p>And of doing strictly better.
+
+<pre>
+Z    Better
+===========
+2    0.0010
+4    0.0422
+6    0.2741
+8    0.6795
+10   0.9466
+12   0.9980
+</pre>
+
+<p>So it looks like you are unlikely to do better on the second axis if there
+are 6 or fewer "bad" edges on the first axis. But you are also unlikely to do
+worse if there are 6, so it might be worth considering if the line edges are
+awkward. Also on the positive side, if there are 10 or more "bad" edges on the
+first axis then you are almost certain to do better on the second axis.
+
+<p>Is it only slightly better though? Swapping a 12 for a 10 isn't a particularly
+fantastic trade. Here are the chances of doing better by 4 and 6 edges, rather
+than just the minimum of 2.
+
+<pre>
+Z    Better by 4    Better by 6
+===============================
+0    0              0
+2    0              0
+4    0.0007         0
+6    0.0327         0.0005
+8    0.2288         0.0231
+10   0.6352         0.1845
+12   0.9327         0.5931
+</pre>
+
+<p>So it is good news. There is a 59.3% chance that the second axis will have
+6 or fewer "bad" edges if the first axis has 12. And a 63.5% chance of 6
+or fewer if the first has 10.  Those are significant chances of improvement.
+
+<h2>Summary</h2>
+
+<p>Always solving EOLine with white on bottom and green or blue on front will
+get you a long way. Most of the time you will get 4, 6 or 8 edge cases and
+you know how to plan those effectively. But if you get unlucky and get a
+couple of 10 edge cases then it can kill your average.
+
+<p>Being able to solve EOLine with red or orange on front <em>as well</em>
+could save the day in this situation. There is almost a 95% chance that
+red-orange will have 8 or fewer "bad" edges if blue-green has 10; and more
+than 63% chance that there will be 6 or fewer. 
+
+<p>"There's no such thing as a free lunch" they say. And the cost is that
+learning a second axis is hard. As if learning one wasn't hard enough. I
+am just starting this process... some days it goes well, some days it seems
+impossible. I'll write a follow up if I make it out the other side!
+
+<div class="nav"><span class="previous_article"><a href="eoline-2.html">EOLine for Intermediates - Part 2</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>

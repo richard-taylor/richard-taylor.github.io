@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>Advanced EOLine - Part 1</title>
+<link>https://richard-taylor.github.io/threads/cubing/eoline-3.html</link>
+<description>The third part of a miniseries on the EOLine step of the ZZ method, this time moving on to more advanced techniques.</description>
+<pubDate>Fri, 12 Aug 2022 19:15:00 GMT</pubDate>
+<category>Cubing Tools And Tricks</category>
+</item>
+<item>
 <title>Blogger versus Diarist</title>
 <link>https://richard-taylor.github.io/threads/r_c_a_d/blogger-v-diarist.html</link>
 <pubDate>Sun, 07 Aug 2022 19:15:00 GMT</pubDate>
@@ -65,13 +72,6 @@
 <description>After knocking about ideas for the basic API, the next thing to do is solidify the design by adding more tests to prove it out.</description>
 <pubDate>Wed, 12 Feb 2020 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
-</item>
-<item>
-<title>Null Safe Boundaries</title>
-<link>https://richard-taylor.github.io/threads/coding/null.html</link>
-<description>A look at how null objects crop up in programs and how to design them out of your own code.</description>
-<pubDate>Fri, 07 Feb 2020 19:15:00 GMT</pubDate>
-<category>Professional Coding Techniques</category>
 </item>
 </channel>
 </rss>
