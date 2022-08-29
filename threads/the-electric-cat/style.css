@@ -29,6 +29,9 @@ dl.index dt {
     color: #a0a0a0;
     padding: 0.25em 0.75em;
 }
+dl.index span {
+    font-size: 66%;
+}
 figcaption {
     background: #006666;
     border-radius: 0.75em;

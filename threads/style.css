@@ -25,11 +25,17 @@ dl.index {
 dl.index dt {
     padding: 0.25em 0.75em;
 }
+dl.index dd::before {
+    content: "\21D2  ";
+}
 dl.index dd {
     color: #a0a0a0;
     font-size: 75%;
     margin-left: 1em;
     padding: 0.25em 0.75em 0.75em 0.75em;
+}
+dl.index span {
+    font-size: 75%;;
 }
 html {
     background: #ddffdd;

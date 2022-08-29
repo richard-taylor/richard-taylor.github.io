@@ -36,6 +36,9 @@ dl.index dt {
     color: #808080;
     padding: 0.25em 0.75em;
 }
+dl.index span {
+    font-size: 66%;
+}
 html {
     background: #ddddff;
 }

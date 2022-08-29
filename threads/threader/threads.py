@@ -163,7 +163,7 @@ class Thread():
                 link = '<a href="{0}">{1}</a>'.format(
                   os.path.basename(article.filename), article.title
                 )
-                index.write('<dt>{} {}</dt>\n'.format(article.date, link))
+                index.write('<dt>{} <span>{}</span></dt>\n'.format(link, article.date))
 
             index.write('</dl>\n')
             index.write('<div class="nav"><a href="../index.html">More threads...</a></div>\n')
@@ -234,7 +234,7 @@ def index(directory, thread_list):
                 title = '<a href="{0}">{1}</a>'.format(relative, title)
 
             index.write('<dt>{}</dt>\n'.format(thread_index))
-            index.write('<dd>{} {}</dd>\n'.format(date, title))
+            index.write('<dd>{} <span>{}</span></dd>\n'.format(title, date))
 
         index.write('</dl>\n')
         index.write('<p><a href="rss.xml">RSS feed</a>\n')
