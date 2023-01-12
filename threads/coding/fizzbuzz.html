@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>FizzBuzz For Interviews</title>
+  <meta name="date.created" content="2023-01-11">
+  <meta name="description" content="What you can learn from talking through a FizzBuzz solution with an interviewee.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="nav"><span class="previous_article"><a href="null.html">Null Safe Boundaries</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+
+<h1 class="title">FizzBuzz For Interviews</h1>
+
+<p>by <a href="../contact.html">Richard Taylor</a>
+    : <span class="date_created">2023-01-11</span>
+
+<h2>Introduction</h2>
+
+<p>For several years at UKCloud we used the infamous <em>FizzBuzz</em> game as
+a coding "test" in interviews. It was always stressed that this was a starting
+point for a "conversation about coding" and not an exam. We neither required or
+wanted candidates to code up a perfect solution in silence and then say "OK,
+done".
+
+<p>To some extent this was born out of the interviewers' own experience of coding
+tests where we had sat in silence thinking "I should be able to do this... but
+my mind has gone blank".
+
+<p>FizzBuzz is simple enough that everyone should be able to get a solution
+working with some coaching. It's also just about complex enough to introduce
+some more advanced concepts, particularly around testing.
+
+<p>Now that UKCloud has gone into liquidation I will be back on the job market
+for the first time in 7 years: so it seems like a good time to reflect on the
+ins and outs of this kind of challenge.
+
+<h2>The Challenge</h2>
+
+<p>Here's a reminder of the challenge statement:
+
+<pre><code class="java">/**
+ * Play the fizz buzz game.
+ *
+ * For all the numbers from 1 to 100, either
+ *
+ * Print the number
+ * Print "Fizz" if the number is a multiple of 3
+ * Print "Buzz" if the number is a multiple of 5
+ * Print "FizzBuzz" if the number is a multiple of 3 and 5.
+ */
+</code></pre>
+
+<p>We do this exercise in whatever language the candidate is most comfortable,
+but for consistency I will just show Java solutions in this article.
+
+<p>There is a trivial solution:
+
+<pre><code class="python">System.out.println(
+"1\n" +
+"2\n" +
+"Fizz\n" +
+"4\n" +
+"Buzz\n" +
+"Fizz\n" +
+"7\n" +
+"8\n" +
+"Fizz\n" +
+"Buzz\n" +
+"11\n" +
+"Fizz\n" +
+"13\n" +
+"14\n" +
+"FizzBuzz\n" +
+...
+</code></pre>
+
+<p>Which I've seen someone start, but not finish. I think they said, correctly,
+something like "I could go on, but it would be hard to test".
+
+<h2>The Basic Solution</h2>
+
+<p>Most people come up with something like this pretty quickly. Especially if
+they have seen the problem before... which most people have, even if they wont
+admit it.
+
+<pre><code class="java">public class FizzBuzz {
+
+    public void play() {
+        for (int number = 1; number <= 100; number++) {
+
+            if (number % 3 == 0 && number % 5 == 0) {
+                System.out.println("FizzBuzz");
+            }
+            else if (number % 3 == 0) {
+                System.out.println("Fizz");
+            }
+            else if (number % 5 == 0) {
+                System.out.println("Buzz");
+            }
+            else {
+                System.out.println(number);
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>It's very common for people, through nerves or inexperience, to put the
+FizzBuzz test at the end so that it never fires, or to forget the "none of
+the above so just print the number" case.
+
+<p>If that happens you get to see how they handle the results not coming out
+as expected. Do they notice? How do they react when it's pointed out? You
+get a small insight into how they go about fixing broken code.
+
+<p>Once something vaguely correct emerges people tend to settle down and
+we can get on and talk about real development processes. That's why I quite
+like this challenge: there's a quick win which makes everyone happy.
+
+<h2>Is It Right?</h2>
+
+<p>Having achieved a working solution the obvious question then is "how
+do we know this is right for all the numbers?" and then we talk about
+testing.
+
+<p>Most people know that they should refactor the code into a testable
+form. How they do that shows a lot about how they think about code and
+what testing means.
+
+<p>Usually more junior developers will immediately refactor the contents
+of the loop into a method and write unit tests for that method.
+
+<pre><code class="java">public class FizzBuzz {
+
+    public void play() {
+        for (int number = 1; number <= 100; number++) {
+
+            System.out.println(numberToString(number));
+        }
+    }
+
+    public String numberToString(int number) {
+        if (number % 3 == 0 && number % 5 == 0) {
+            return "FizzBuzz";
+        }
+        else if (number % 3 == 0) {
+            return "Fizz";
+        }
+        else if (number % 5 == 0) {
+            return "Buzz";
+        }
+        else {
+            return String.valueOf(number);
+        }
+    }
+}
+</code></pre>
+
+<p>You can chat about which numbers should be tested to give confidence in the
+code. Which is great until someone asks "Is that testing the play() method?"
+
+<p>It is, indirectly, but you could break that method and all your tests
+would still pass...
+
+<pre><code class="java">public class FizzBuzz {
+
+    public void play() {
+        for (int number = 1; number <= <b>10</b>; number++) {
+
+            System.out.println(numberToString(number));
+        }
+    }
+
+    public String numberToString(int number) {
+        if (number % 3 == 0 && number % 5 == 0) {
+            return "FizzBuzz";
+        }
+        else if (number % 3 == 0) {
+            return "Fizz";
+        }
+        else if (number % 5 == 0) {
+            return "Buzz";
+        }
+        else {
+            return String.valueOf(number);
+        }
+    }
+}
+</code></pre>
+
+<p>It's only a more experienced developer who will think about injecting
+a dependency into the object-under-test in order to test the play() method
+directly.
+
+<pre><code class="java">public class FizzBuzz {
+
+    private final Printer printer;
+
+    public FizzBuzz(Printer printer) {
+        this.printer = printer;
+    }
+
+    public void play() {
+        for (int i = 1; i <= 100; i++) {
+            printer.print(numberToString(i));
+        }
+    }
+
+    ...
+}
+</code></pre>
+
+<p>Here you can check that exactly 100 things are printed. Then you can talk
+about <em>Inversion of Control</em> and some of the other SOLID principles if
+you like.
+
+<h2>Beyond Basic</h2>
+
+<p>Sometimes people come up with different ways to do the basic number-to-string
+transformation, or the conversation drifts into alternatives for some reason.
+
+<p>Occassionally a candidate will go super terse, as if they think we will be
+deducting marks for using "extra" characters. But many people will adopt some
+aspect of the space-saver.
+
+<pre><code class="java">public String numberToString(int number) {
+    if(number%15==0)return"FizzBuzz";
+    if(number%3==0)return"Fizz";
+    if(number%5==0)return"Buzz";
+    return""+number;
+}
+</code></pre>
+
+<p>Interestingly, it is rare for people to realise that (n % 15 == 0) is equivalent
+but more efficient than (n % 3 == 0) &amp;&amp; (n % 5 == 0). But sometimes people
+will say "I could use 15 here, but using 3 and 5 is easier to understand". Which is
+valid and usually leads to a conversation about comments plus complex code versus
+plain and simple code.
+
+<p>In an interview situation it is more common for people to go verbose to show
+that they know about how to write maintainable code.
+
+<pre><code class="java">public String numberToString(int number) {
+    String THREE = "Fizz";
+    String FIVE = "Buzz";
+    String BOTH = "FizzBuzz";
+
+    boolean is3 = isMultiple(number, 3);
+    boolean is5 = isMultiple(number, 5);
+
+    if (is3 && is5)
+        return BOTH;
+    if (is3)
+        return THREE;
+    if (is5)
+        return FIVE;
+    return String.valueOf(number);
+}
+
+private boolean isMultiple(int number, int factor) {
+    return number % factor == 0;
+}
+</code></pre>
+
+<p>One thing that often floors candidates is if you ask how their
+solution could be extended to include printing "Bang" for multiples
+of 7. If they start trying to nest "if" statements then you often
+get into a mess quite quickly. But not if they went for an incremental
+solution in the first place like this.
+
+<pre><code class="java">public String numberToString(int number) {
+    StringBuilder stringBuilder = new StringBuilder();
+
+    if (number % 3 == 0) {
+        stringBuilder.append("Fizz");
+    }
+    if (number % 5 == 0) {
+        stringBuilder.append("Buzz");
+    }
+    if (stringBuilder.length() == 0) {
+        stringBuilder.append(number);
+    }
+    return stringBuilder.toString(); 
+}
+</code></pre>
+
+<p>Here you just have to add 3 lines in the right place and the job's done.
+
+<pre><code class="java">public String numberToString(int number) {
+
+    ...
+
+    if (number % 7 == 0) {
+        stringBuilder.append("Bang");
+    }
+
+    ...
+}
+</code></pre>
+
+<p>Candidates who have done FizzBuzz before will often produce this solution
+and say that they chose this way so it can be extended to more numbers. I think
+it also shows that the candidate has spotted that "FizzBuzz" is not just a
+random third string in the question, but is "Fizz" (the 3-ness) followed by
+"Buzz" (the 5-ness), which then naturally extends to any number of prime
+factors.
+
+<p>(I am a bit biased towards this as a good solution since it's the one I went
+for when I joined UKCloud, or Skyscape as it was, in 2016. Except I did it in
+Python... or was it JavaScript?)
+
+<h2>Brave Or Foolish?</h2>
+
+<p>There are some more exotic solutions that we have discussed as
+interviewers but never seen in the wild. I guess it's high risk
+to go with one of these since candidates don't want to come across
+as a smart arse... especially if they also don't get it quite right.
+
+<p>One that I always thought we might see is to use the fact that the "number
+number Fizz number Buzz ..." sequence is only 15 items long and then repeats,
+so you could store that and pick from the list with only one modulus operation
+and no ifs.
+
+<pre><code class="java">private static final String FIZZ = "Fizz";
+private static final String BUZZ = "Buzz";
+private static final String N = null;
+
+private static final String[] cache15 = { 
+    N, N, FIZZ, N, BUZZ, FIZZ, N, N, FIZZ, BUZZ, 
+    N, FIZZ, N, N, FIZZ+BUZZ
+};
+
+public String numberToString(int number) {
+    String result = cache15[(number - 1) % 15];
+    return result != N ? result : String.valueOf(number);
+}
+</code></pre>
+
+<p>OK, the conditional in the return statement is a kind of if.
+
+<p>If someone did come up with this then you could obviously deflate them
+immediately by asking how they would extend this to 7=Bang but that would
+be mean, I think. Would I be brave enough to do this in an interview?
+Probably not... but I might mention that it was an option.
+
+<p>The "craziest" solution I have encountered online is to use Euler's
+Totient Theorem, like this.
+
+<pre><code class="java">public String numberToString(int number) {
+
+    // Euler's Totient Theorem can be used to show 
+    // that (number ^ 4) % 15 must be in {0,1,6,10}
+
+    switch ((number * number * number * number) % 15) {
+        case 1: return String.valueOf(number);
+        case 6: return "Fizz";
+        case 10: return "Buzz";
+    }
+    return "FizzBuzz";
+}
+</code></pre>
+
+<p>If you go with that then be prepared to explain what a totient is and
+make sure you put a comment in the code. Depending on how impressed the
+interviewer is you may immediately get asked how big number has to get
+before (number ^ 4) causes an overflow... so be ready for that.
+
+<h2>Performance</h2>
+
+<p>Most of the code we write is network bound so compute performance is
+not generally something we worry about. It's interesting that when asked
+"How can we improve this code?" a common answer is "make it faster".
+
+<p>Which leads to a discussion about performance versus maintainability
+and so on. Amusingly, since FizzBuzz doesn't do very much, it's common
+for people to say "make it faster" and then not be able to identify
+any ways to do that.
+
+<p>One way that I touched on above is to replace the pair of tests for
+divisibity by 3 and divisibility by 5 by a single test of divisibility
+by 15. But there is a more subtle change that also has a performance gain
+and raises a more general point. Nearly everyone writes the 3 before the
+5, because that's how the challenge reads.
+
+<pre><code class="java">if (number % 3 == 0 && number % 5 == 0) {
+    return "FizzBuzz";
+}
+</code></pre>
+
+<p>But if you think about it, and know that &amp;&amp; does not evaluate
+the second test if the first is false, then it's better to write the 5
+first, since there are fewer multiples of 5.
+
+<pre><code class="java">if (number % 5 == 0 && number % 3 == 0) {
+    return "FizzBuzz";
+}
+</code></pre>
+
+<p>The second way does 120 tests for numbers 1-100 versus 133 tests the
+other way. It's not a massive difference here, but if there was a big
+difference in evaluation time and likelihood for some real bit of code
+then you would definitely want to get it the right way round!
+
+<h2>Summary</h2>
+
+<p>An interview environment is very different from the normal day-to-day
+working environment that developers write code in. So you shouldn't extrapolate
+from a candidate's performance in a straight coding test to judge how they will
+perform as an employee.
+
+<p>Instead the onus is on you the interviewer to evaluate candidates fairly
+in a collaborative way, working much as you would when doing your day job.
+
+<p>One way to do that is using a simple challenge like "FizzBuzz" where you
+can start with a basic solution and use it as a framework for a series of
+conversations about the craft of software development and engineering.
+
+<p>When UKCloud went into liquidation I <a
+href="https://github.com/richard-taylor/training-examples/tree/master/java_fizzbuzz">forked
+the public repo where we kept the training examples</a> to keep them for posterity.
+
+<div class="nav"><span class="previous_article"><a href="null.html">Null Safe Boundaries</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article">This is the latest article</span></div>
+</body>
+</html>

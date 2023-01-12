@@ -6,6 +6,13 @@
 <description>Series of articles by Richard Taylor BEng PhD</description>
 <language>en</language>
 <item>
+<title>FizzBuzz For Interviews</title>
+<link>https://richard-taylor.github.io/threads/coding/fizzbuzz.html</link>
+<description>What you can learn from talking through a FizzBuzz solution with an interviewee.</description>
+<pubDate>Wed, 11 Jan 2023 19:15:00 GMT</pubDate>
+<category>Professional Coding Techniques</category>
+</item>
+<item>
 <title>Advanced EOLine - Part 1</title>
 <link>https://richard-taylor.github.io/threads/cubing/eoline-3.html</link>
 <description>The third part of a miniseries on the EOLine step of the ZZ method, this time moving on to more advanced techniques.</description>
@@ -64,13 +71,6 @@
 <link>https://richard-taylor.github.io/threads/the-electric-cat/event-logging.html</link>
 <description>To log all events of who did what, we first have to sort out who is who; by nailing down our user management.</description>
 <pubDate>Tue, 18 Feb 2020 19:15:00 GMT</pubDate>
-<category>The Electric Cat</category>
-</item>
-<item>
-<title>Test Driven Refinement</title>
-<link>https://richard-taylor.github.io/threads/the-electric-cat/more-tests.html</link>
-<description>After knocking about ideas for the basic API, the next thing to do is solidify the design by adding more tests to prove it out.</description>
-<pubDate>Wed, 12 Feb 2020 19:15:00 GMT</pubDate>
 <category>The Electric Cat</category>
 </item>
 </channel>
