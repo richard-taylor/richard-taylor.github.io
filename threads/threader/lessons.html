@@ -1,86 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Lessons Learned</title>
-  <meta name="date.created" content="2019-01-28">
-  <link rel="stylesheet" href="style.css">
+<meta http-equiv="Refresh" content="0; URL=https://richardtaylor.co.uk/threads/threader/lessons.html">
 </head>
 <body>
-<div class="nav"><span class="previous_article"><a href="usage.html">Threader Usage</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article"><a href="rss.html">RSS Is Alive And Well</a></span></div>
-
-<h1 class="title">Lessons Learned</h1>
-
-<p>by <a href="../contact.html">Richard Taylor</a>
-    : <span class="date_created">2019-01-28</span>
-
-<p>In no particular order.
-
-<ul>
-
-<li>Resist the urge to over-engineer
-
-<p>Even though I knew I only wanted a few features from this program, it was
-hard to not design and implement it as if I might need to extend it massively
-in the future.
-
-<p>That's what you get from years of working on code that needed extending
-but was not extendable.
-
-<p>So many of my personal projects never get finished because they never get
-complete enough to be useful... whilst potentially being very extendable.
-
-<p>To force myself to keep the design compact I decided to put all the classes
-into a single file. That way my desire to keep the file small enough to read
-offset my desire to abstract things too much.
-
-<li>Unit tests always pay for themselves
-
-<p>Not a lesson I learned here for the first time, but worth repeating over and
-over again. Even a small piece of code like this benefits from having unit
-tests. And if I do need to extend and refactor in future, or even just
-remember how this is supposed to work, it will be so much easier.
-
-<p>Part of the not over-engineering was a decision to use regexes rather
-than a full HTML parser to extract and insert into documents. That is easier
-to justify (to yourself at least) if you have tests that show the cases you
-have covered.
-
-<li>Write some docs for yourself
-
-<p>I knocked up this documentation as a demo of the code I was writing. But
-actually on reflection I found it really useful to clarify what I had done and
-why. I think even if I had never published it to the web it would still have
-been worth writing.
-
-<p>Often I just make notes in a text file alongside the code. But I think in
-future I will write something a bit more substantial, even if just for myself.
-
-<li>Resist the urge to over-style the content
-
-<p>One of the motivations for writing content directly in HTML was to avoid
-all the cookies, tracking pixels, bloated JavaScript and adverts that are
-included by other tools (or may be included in the future).
-
-<p>A potential drawback with this level of control is the abilty to spend
-forever tweaking style sheets to get exactly what you want. This takes some
-effort to resist.
-
-<p>Particularly, since many of these threads are about code of some kind, I was
-very tempted to apply complex styling to the <code>code</code> elements. There
-are many JavaScript libraries to do this. But ultimately I don't think it is
-good for content to style down to that level. How a reader prefers to see code
-"coloured" is down to their preference. It is the writer's job to markup the
-content clearly and the browsers job to display it as the user requires.
-
-<p>At the end of the day, content is more important than styling IMO.
-
-</ul>
-
-<div class="nav"><span class="previous_article"><a href="usage.html">Threader Usage</a></span> &lt; <a href="index.html">Index</a> &gt; <span class="next_article"><a href="rss.html">RSS Is Alive And Well</a></span></div>
-
-<div class="edits">
-<h2>Edits</h2>
-<p>2019-01-30 : added a section on tracking and browser formatting of code.
-</div>
 </body>
 </html>
